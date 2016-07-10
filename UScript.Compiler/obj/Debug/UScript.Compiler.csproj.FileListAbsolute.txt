@@ -1,0 +1,8 @@
+C:\Users\mattias\Documents\Visual Studio 2015\Projects\UScript\UScript.Compiler\bin\Debug\UScript.Compiler.dll
+C:\Users\mattias\Documents\Visual Studio 2015\Projects\UScript\UScript.Compiler\bin\Debug\UScript.Compiler.pdb
+C:\Users\mattias\Documents\Visual Studio 2015\Projects\UScript\UScript.Compiler\bin\Debug\Antlr4.Runtime.net40.dll
+C:\Users\mattias\Documents\Visual Studio 2015\Projects\UScript\UScript.Compiler\bin\Debug\Antlr4.Runtime.net40.xml
+C:\Users\mattias\Documents\Visual Studio 2015\Projects\UScript\UScript.Compiler\obj\Debug\UScript.Compiler.dll
+C:\Users\mattias\Documents\Visual Studio 2015\Projects\UScript\UScript.Compiler\obj\Debug\UScript.Compiler.pdb
+C:\Users\mattias\Documents\Visual Studio 2015\Projects\UScript\UScript.Compiler\bin\Debug\UScript.Compiler.dll.CodeAnalysisLog.xml
+C:\Users\mattias\Documents\Visual Studio 2015\Projects\UScript\UScript.Compiler\bin\Debug\UScript.Compiler.dll.lastcodeanalysissucceeded
