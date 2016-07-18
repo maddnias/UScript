@@ -30,7 +30,7 @@ namespace UScript.Compiler.Writer.Metadata.V1
         public void WriteTo(Stream dest)
         {
             dest.Write(BitConverter.GetBytes(Name.Length), 0, sizeof(int));
-            dest.Write(Encoding.UTF8.GetBytes(Name), 0, Name.Length);
+            dest.Write(Encoding.ASCII.GetBytes(Name), 0, Name.Length);
             dest.WriteByte(IsEntrypoint ? (byte)0x1 : (byte)0x0);
             BlobAddress.WriteTo(dest);
             CodeAddress.WriteTo(dest);
