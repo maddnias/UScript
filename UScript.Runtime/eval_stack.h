@@ -1,12 +1,12 @@
 #ifndef EVAL_STACK_H
 #define EVAL_STACK_H
+
 #include <stdint.h>
 #include "data_types.h"
 #include "include/error.h"
 
 typedef struct StackEntry {
 	UScriptTypeDesc type_desc;
-	char* data;
 } StackEntry;
 
 typedef struct EvalStack {

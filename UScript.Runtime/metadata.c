@@ -1,6 +1,7 @@
 #include "metadata.h"
 #include <stdlib.h>
 #include "uscript_string.h"
+#include <memory.h>
 
 USCRIPT_ERR create_mdctx_from_file(FILE *file,  UScriptMetadataContext** ctx)
 {
@@ -28,6 +29,11 @@ USCRIPT_ERR create_mdctx_from_file(FILE *file,  UScriptMetadataContext** ctx)
 		free(buf);
 		return res;
 	}
+
+	(*ctx)->code_block_size = fileSize - (*ctx)->pe_hdr.code_start;
+	(*ctx)->code_block = (char*)malloc((*ctx)->code_block_size);
+
+	memcpy((*ctx)->code_block, buf + (*ctx)->pe_hdr.code_start, (*ctx)->code_block_size);
 
 	free(buf);
 	return USCRIPT_ERR_SUCCESS;

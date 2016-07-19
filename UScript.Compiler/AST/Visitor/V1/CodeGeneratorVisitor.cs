@@ -149,9 +149,9 @@ namespace UScript.Compiler.AST.Visitor.V1
         {
             var num = int.Parse(node.Context.GetText());
             if (_funcHeader != null)
-                _funcHeader.CodeGen.Emit(OpCode.LINT, num);
+                _funcHeader.CodeGen.Emit(OpCode.LI32, num);
             else
-                _context.CodeGen.Emit(OpCode.LINT, num);
+                _context.CodeGen.Emit(OpCode.LI32, num);
         }
 
         public override void VisitVariableReferenceNode(VariableReferenceNode node)

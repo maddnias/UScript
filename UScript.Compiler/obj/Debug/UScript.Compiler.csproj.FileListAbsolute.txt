@@ -4,4 +4,3 @@ C:\Users\mattias\Documents\Visual Studio 2015\Projects\UScript\UScript.Compiler\
 C:\Users\mattias\Documents\Visual Studio 2015\Projects\UScript\UScript.Compiler\bin\Debug\Antlr4.Runtime.net40.xml
 C:\Users\mattias\Documents\Visual Studio 2015\Projects\UScript\UScript.Compiler\obj\Debug\UScript.Compiler.dll
 C:\Users\mattias\Documents\Visual Studio 2015\Projects\UScript\UScript.Compiler\obj\Debug\UScript.Compiler.pdb
-C:\Users\mattias\documents\visual studio 2015\Projects\UScript\UScript.Compiler\obj\Debug\UScript.Compiler.csprojResolveAssemblyReference.cache

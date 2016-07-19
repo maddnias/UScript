@@ -133,14 +133,18 @@
     <ClInclude Include="data_types.h" />
     <ClInclude Include="executor.h" />
     <ClInclude Include="eval_stack.h" />
+    <ClInclude Include="function_context.h" />
     <ClInclude Include="helper.h" />
     <ClInclude Include="include\error.h" />
     <ClInclude Include="metadata.h" />
+    <ClInclude Include="metadata_context.h" />
+    <ClInclude Include="opcodes.h" />
     <ClInclude Include="runtime_context.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="uscript_string.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="executor.c" />
     <ClCompile Include="metadata.c" />
     <ClCompile Include="uscript_string.c" />
   </ItemGroup>

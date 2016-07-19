@@ -9,6 +9,6 @@
 #define USCRIPT_ERR_INVALID_MAGIC 1
 #define USCRIPT_ERR_FILE_ERR 2
 #define USCRIPT_ERR_UNK 3
-
+#define USCRIPT_ERR_UNKNOWN_OP 4
 
 #endif

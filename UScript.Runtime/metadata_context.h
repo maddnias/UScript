@@ -33,6 +33,8 @@ typedef struct FunctionMetadataTable {
 typedef struct UScriptMetadataContext {
 	UScriptPEHeader pe_hdr;
 	FunctionMetadataTable func_tbl;
+	int32_t code_block_size;
+	char* code_block;
 } UScriptMetadataContext;
 
 #endif

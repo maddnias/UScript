@@ -17,6 +17,7 @@ typedef enum {
 typedef struct UScriptTypeDescriptor {
 	uscript_datatype type;
 	bool is_array;
+	char* data;
 } UScriptTypeDesc;
 
 #endif

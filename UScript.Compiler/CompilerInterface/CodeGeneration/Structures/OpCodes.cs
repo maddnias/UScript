@@ -52,8 +52,8 @@ namespace UScript.Compiler.CompilerInterface.CodeGeneration.Structures
         /// </summary>
         LPARAM,
         /// <summary>
-        /// Loads an integer
+        /// Loads an I32 integer
         /// </summary>
-        LINT
+        LI32
     }
 }
