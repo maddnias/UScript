@@ -46,7 +46,6 @@ USCRIPT_ERR create_runtime_ctx(UScriptRuntimeContext **ctx, UScriptMetadataConte
 }
 
 USCRIPT_ERR parse_next_instr(UScriptRuntimeContext *ctx, UScriptInstruction **instr) {
-
 	char rawOp = read_next_char(ctx);
 	
 	if(rawOp < 0 || rawOp > USCRIPT_OP_MAX) {
@@ -82,4 +81,6 @@ void execute_instr_li32(UScriptRuntimeContext *ctx) {
 	if(eval_stack_push(ctx->desc->func_ctx->eval_stack, entry) != USCRIPT_ERR_SUCCESS) {
 		return;
 	}
+
+	eval_stack_destroy(ctx->desc->func_ctx->eval_stack);
 }

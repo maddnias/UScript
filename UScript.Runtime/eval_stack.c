@@ -20,6 +20,13 @@ void eval_stack_create(EvalStack **stack) {
 	(*stack)->entries = (StackEntry**)malloc((*stack)->max_size * sizeof(StackEntry*));
 }
 
+void eval_stack_destroy(EvalStack *stack) {
+	for(int i = stack->current_size;i > 0;i--) {
+		stack_entry_destroy(stack->entries[i-1]);
+	}
+	free(stack);
+}
+
 USCRIPT_ERR eval_stack_push(EvalStack *stack, StackEntry *entry) {
 	if(stack->current_size +1 > stack->max_size) {
 		return USCRIPT_ERR_STACK_OVERFLOW;
