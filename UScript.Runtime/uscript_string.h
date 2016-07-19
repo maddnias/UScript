@@ -9,14 +9,18 @@ typedef struct UScriptString {
 	bool initialized;
 } UScriptString;
 
-UScriptString* alloc_uscript_string(int32_t);
+UScriptString* uscript_string_alloc(int32_t);
 
-UScriptString* create_uscript_string(int32_t, char *);
+UScriptString* uscript_string_create(int32_t, char *);
 
-void set_uscript_string_data(UScriptString **str, char *data);
+void uscript_string_set_data(UScriptString **str, char *data);
 
-void destroy_uscript_string(UScriptString *str);
+void uscript_string_destroy(UScriptString *str);
 
 bool uscript_string_is_equal(UScriptString *str1, UScriptString *str2);
+
+UScriptString* uscript_string_append(UScriptString *str1, UScriptString *str2);
+
+bool __ensure_uscript_string_initialized(int n_str, ...);
 
 #endif

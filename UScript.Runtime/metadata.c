@@ -72,12 +72,12 @@ USCRIPT_ERR parse_func_tbl(char *buf, FunctionMetadataTable** tbl, UScriptMetada
 		pRowArr[i] = ( FunctionMetadataRow*)malloc(sizeof( FunctionMetadataRow));
 		pRowArr[i]->token = i + FUNCTION_TOK_BASE;
 
-		 UScriptString *strName = alloc_uscript_string(*(int32_t*)buf);
+		int32_t nameLen = *(int32_t*)buf;// UScriptString *strName = uscript_string_alloc(*(int32_t*)buf);
 		buf += sizeof(int32_t);
 		
-		set_uscript_string_data(&strName, buf);
-		pRowArr[i]->name = *strName;
-		buf += pRowArr[i]->name.len;
+		//uscript_string_set_data(&strName, buf);
+		pRowArr[i]->name = uscript_string_create(nameLen, buf);
+		buf += pRowArr[i]->name->len;
 
 		pRowArr[i]->ep = *(char*)buf;
 		buf++;

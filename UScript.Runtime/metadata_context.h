@@ -19,7 +19,7 @@ typedef struct UScriptPEHeader {
 
 typedef struct FunctionMetadataRow {
 	int64_t token;
-	struct UScriptString name;
+	UScriptString *name;
 	bool ep;
 	uint64_t blob_addr;
 	uint64_t code_addr;
