@@ -62,5 +62,14 @@
     <ClCompile Include="executor.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="function_context.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="eval_stack.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="data_types.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

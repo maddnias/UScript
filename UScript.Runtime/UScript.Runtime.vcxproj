@@ -144,7 +144,10 @@
     <ClInclude Include="uscript_string.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="data_types.c" />
+    <ClCompile Include="eval_stack.c" />
     <ClCompile Include="executor.c" />
+    <ClCompile Include="function_context.c" />
     <ClCompile Include="metadata.c" />
     <ClCompile Include="uscript_string.c" />
   </ItemGroup>

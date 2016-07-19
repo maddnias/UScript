@@ -6,7 +6,7 @@
 #include "include/error.h"
 
 typedef struct StackEntry {
-	UScriptTypeDesc type_desc;
+	UScriptTypeDesc* type_desc;
 } StackEntry;
 
 typedef struct EvalStack {
@@ -15,7 +15,11 @@ typedef struct EvalStack {
 	StackEntry **entries;
 } EvalStack;
 
+void stack_entry_create(StackEntry **entry, uscript_datatype type);
+void stack_entry_destroy(StackEntry *entry);
+
 void eval_stack_create(EvalStack **stack);
+void eval_stack_destroy(EvalStack *stack);
 StackEntry* eval_stack_pop(EvalStack *stack);
 USCRIPT_ERR eval_stack_push(EvalStack *stack, StackEntry *entry);
 
