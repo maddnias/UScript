@@ -1,5 +1,6 @@
 #ifndef DATA_TYPES_H
 #define DATA_TYPES_H
+#include <stdbool.h>
 
 typedef enum {
 	BYTE,
@@ -12,4 +13,10 @@ typedef enum {
 	U32,
 	U64
 } uscript_datatype;
+
+typedef struct UScriptTypeDescriptor {
+	uscript_datatype type;
+	bool is_array;
+} UScriptTypeDesc;
+
 #endif
