@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "include\error.h"
+#include "include/error.h"
 #include "include/uscript_string.h"
 
 static const int64_t HDR_MAGIC = 0x0BBE1010BBE101;

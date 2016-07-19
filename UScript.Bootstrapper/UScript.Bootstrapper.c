@@ -1,9 +1,6 @@
 // UScript.Bootstrapper.cpp : Defines the entry point for the console application.
 //
-
-#include "stdafx.h"
 #include "metadata.h"
-#include "../UScript.Runtime/metadata.h"
 
 
 int main()

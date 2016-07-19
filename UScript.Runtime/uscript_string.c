@@ -1,4 +1,4 @@
-#include "uscript_string.h"
+#include "include/uscript_string.h"
 #include <stdlib.h>
 #include <memory.h>
 

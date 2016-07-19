@@ -130,9 +130,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="helper.h" />
     <ClInclude Include="include\error.h" />
     <ClInclude Include="include\uscript_string.h" />
@@ -140,8 +137,8 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="include\uscript_string.c" />
     <ClCompile Include="metadata.c" />
+    <ClCompile Include="uscript_string.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
