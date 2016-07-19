@@ -130,7 +130,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="data_types.h" />
     <ClInclude Include="executor.h" />
+    <ClInclude Include="eval_stack.h" />
     <ClInclude Include="helper.h" />
     <ClInclude Include="include\error.h" />
     <ClInclude Include="metadata.h" />

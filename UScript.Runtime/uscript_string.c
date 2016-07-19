@@ -2,23 +2,23 @@
 #include <stdlib.h>
 #include <memory.h>
 
-struct UScriptString* alloc_uscript_string(int32_t str_len) {
-	struct UScriptString *str;
-	str = (struct UScriptString*)malloc(sizeof(int32_t) + str_len + sizeof(bool));
+ UScriptString* alloc_uscript_string(int32_t str_len) {
+	 UScriptString *str;
+	str = ( UScriptString*)malloc(sizeof(int32_t) + str_len + sizeof(bool));
 	str->len = str_len;
 	str->initialized = false;
 
 	return str;
 }
 
-struct UScriptString* create_uscript_string(int32_t str_len, char *data) {
-	struct UScriptString *str = alloc_uscript_string(str_len);
+ UScriptString* create_uscript_string(int32_t str_len, char *data) {
+	 UScriptString *str = alloc_uscript_string(str_len);
 	set_uscript_string_data(&str, data);
 
 	return str;
 }
 
-void set_uscript_string_data(struct UScriptString **str, char *data) {
+void set_uscript_string_data( UScriptString **str, char *data) {
 	// Immutable
 	if((*str)->initialized) {
 		return;
@@ -30,11 +30,11 @@ void set_uscript_string_data(struct UScriptString **str, char *data) {
 	(*str)->initialized = true;
 }
 
-void destroy_uscript_string(struct UScriptString *str) {
+void destroy_uscript_string( UScriptString *str) {
 	free(str->data);
 }
 
-bool uscript_string_is_equal(struct UScriptString *str1, struct UScriptString *str2) {
+bool uscript_string_is_equal( UScriptString *str1,  UScriptString *str2) {
 	if (!str1->initialized || !str2->initialized)
 		return false;
 

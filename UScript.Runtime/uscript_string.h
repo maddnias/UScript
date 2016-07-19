@@ -3,20 +3,20 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-struct UScriptString {
+typedef struct UScriptString {
 	int32_t len;
 	char *data;
 	bool initialized;
-};
+} UScriptString;
 
-struct UScriptString* alloc_uscript_string(int32_t);
+UScriptString* alloc_uscript_string(int32_t);
 
-struct UScriptString* create_uscript_string(int32_t, char *);
+UScriptString* create_uscript_string(int32_t, char *);
 
-void set_uscript_string_data(struct UScriptString **str, char *data);
+void set_uscript_string_data(UScriptString **str, char *data);
 
-void destroy_uscript_string(struct UScriptString *str);
+void destroy_uscript_string(UScriptString *str);
 
-bool uscript_string_is_equal(struct UScriptString *str1, struct UScriptString *str2);
+bool uscript_string_is_equal(UScriptString *str1, UScriptString *str2);
 
 #endif

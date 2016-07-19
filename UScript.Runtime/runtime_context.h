@@ -2,13 +2,13 @@
 #define RUNTIME_CONTEXT_H
 #include <stdint.h>
 
-struct RuntimeDescriptor {
+typedef struct RuntimeDescriptor {
 	uint32_t ip;
-};
+} RuntimeDescriptor;
 
-struct RuntimeContext {
-	struct RuntimeDescriptor desc;
+typedef struct RuntimeContext {
+	RuntimeDescriptor desc;
 
-};
+} RuntimeContext;
 
 #endif

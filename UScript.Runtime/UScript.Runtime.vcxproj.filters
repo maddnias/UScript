@@ -36,6 +36,12 @@
     <ClInclude Include="uscript_string.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="eval_stack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="data_types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="metadata.c">

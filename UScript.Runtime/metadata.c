@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "uscript_string.h"
 
-USCRIPT_ERR create_mdctx_from_file(FILE *file, struct UScriptMetadataContext** ctx)
+USCRIPT_ERR create_mdctx_from_file(FILE *file,  UScriptMetadataContext** ctx)
 {
 	if (file == NULL)
 		return USCRIPT_ERR_FILE_ERR;
@@ -10,7 +10,7 @@ USCRIPT_ERR create_mdctx_from_file(FILE *file, struct UScriptMetadataContext** c
 	fseek(file, 0, SEEK_END);
 	int64_t fileSize = ftell(file);
 
-	if (fileSize < sizeof(struct UScriptPEHeader))
+	if (fileSize < sizeof( UScriptPEHeader))
 		return USCRIPT_ERR_FILE_ERR;
 
 	rewind(file);
@@ -33,23 +33,23 @@ USCRIPT_ERR create_mdctx_from_file(FILE *file, struct UScriptMetadataContext** c
 	return USCRIPT_ERR_SUCCESS;
 }
 
-USCRIPT_ERR create_mdctx(char *buf, struct UScriptMetadataContext **ctx)
+USCRIPT_ERR create_mdctx(char *buf,  UScriptMetadataContext **ctx)
 {
 	if (buf == NULL)
 		return USCRIPT_ERR_FILE_ERR;
 
-	*ctx = (struct UScriptMetadataContext*)malloc(sizeof(struct UScriptMetadataContext));
-	**ctx = *(struct UScriptMetadataContext*)buf;
+	*ctx = ( UScriptMetadataContext*)malloc(sizeof( UScriptMetadataContext));
+	**ctx = *( UScriptMetadataContext*)buf;
 
 	if((*ctx)->pe_hdr.magic != HDR_MAGIC) {
 		free(ctx);
 		return USCRIPT_ERR_INVALID_MAGIC;
 	}
 
-	buf += sizeof(struct UScriptPEHeader);
+	buf += sizeof( UScriptPEHeader);
 
 	USCRIPT_ERR res;
-	struct FunctionMetadataTable *func_tbl;
+	 FunctionMetadataTable *func_tbl;
 	if((res = parse_func_tbl(buf, &func_tbl, *ctx)) != USCRIPT_ERR_SUCCESS) {
 		free(ctx);
 		return USCRIPT_ERR_UNK;
@@ -60,19 +60,19 @@ USCRIPT_ERR create_mdctx(char *buf, struct UScriptMetadataContext **ctx)
 	return USCRIPT_ERR_SUCCESS;
 }
 
-USCRIPT_ERR parse_func_tbl(char *buf, struct FunctionMetadataTable** tbl, struct UScriptMetadataContext *ctx)
+USCRIPT_ERR parse_func_tbl(char *buf, FunctionMetadataTable** tbl, UScriptMetadataContext *ctx)
 {
-	int32_t funcCount = sizeof(struct FunctionMetadataRow)
+	int32_t funcCount = sizeof( FunctionMetadataRow)
 		/ (ctx->pe_hdr.string_tbl_addr - ctx->pe_hdr.function_tbl_addr);
 
-	struct FunctionMetadataRow** pRowArr = 
-		(struct FunctionMetadataRow**)malloc(funcCount * sizeof(struct FunctionMetadataRow*));
+	 FunctionMetadataRow** pRowArr = 
+		( FunctionMetadataRow**)malloc(funcCount * sizeof( FunctionMetadataRow*));
 
 	for(int i = 0;i < funcCount;i++) {
-		pRowArr[i] = (struct FunctionMetadataRow*)malloc(sizeof(struct FunctionMetadataRow));
+		pRowArr[i] = ( FunctionMetadataRow*)malloc(sizeof( FunctionMetadataRow));
 		pRowArr[i]->token = i + FUNCTION_TOK_BASE;
 
-		struct UScriptString *strName = alloc_uscript_string(*(int32_t*)buf);
+		 UScriptString *strName = alloc_uscript_string(*(int32_t*)buf);
 		buf += sizeof(int32_t);
 		
 		set_uscript_string_data(&strName, buf);
@@ -89,7 +89,7 @@ USCRIPT_ERR parse_func_tbl(char *buf, struct FunctionMetadataTable** tbl, struct
 		buf += sizeof(int64_t);
 	}
 
-	*tbl = (struct FunctionMetadataTable*)malloc(sizeof(struct FunctionMetadataTable));
+	*tbl = ( FunctionMetadataTable*)malloc(sizeof( FunctionMetadataTable));
 	(*tbl)->func_count = funcCount;
 	(*tbl)->tbl = pRowArr;
 
