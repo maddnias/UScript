@@ -130,11 +130,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="executor.h" />
     <ClInclude Include="helper.h" />
     <ClInclude Include="include\error.h" />
-    <ClInclude Include="include\uscript_string.h" />
     <ClInclude Include="metadata.h" />
+    <ClInclude Include="runtime_context.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="uscript_string.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="metadata.c" />

@@ -21,13 +21,19 @@
     <ClInclude Include="helper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="metadata.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\error.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\uscript_string.h">
+    <ClInclude Include="executor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="metadata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="runtime_context.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="uscript_string.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

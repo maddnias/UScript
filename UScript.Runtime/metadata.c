@@ -1,8 +1,6 @@
 #include "metadata.h"
 #include <stdlib.h>
-#include "helper.h"
-#include <memory.h>
-#include "include/uscript_string.h"
+#include "uscript_string.h"
 
 USCRIPT_ERR create_mdctx_from_file(FILE *file, struct UScriptMetadataContext** ctx)
 {
