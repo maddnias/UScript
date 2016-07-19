@@ -4,8 +4,7 @@
 #include <memory.h>
 #include "include/uscript_string.h"
 
-USCRIPT_ERR
-create_mdctx_from_file(FILE *file, struct UScriptMetadataContext** ctx)
+USCRIPT_ERR create_mdctx_from_file(FILE *file, struct UScriptMetadataContext** ctx)
 {
 	if (file == NULL)
 		return USCRIPT_ERR_FILE_ERR;
@@ -36,8 +35,7 @@ create_mdctx_from_file(FILE *file, struct UScriptMetadataContext** ctx)
 	return USCRIPT_ERR_SUCCESS;
 }
 
-USCRIPT_ERR
-create_mdctx(char *buf, struct UScriptMetadataContext **ctx)
+USCRIPT_ERR create_mdctx(char *buf, struct UScriptMetadataContext **ctx)
 {
 	if (buf == NULL)
 		return USCRIPT_ERR_FILE_ERR;
@@ -64,8 +62,7 @@ create_mdctx(char *buf, struct UScriptMetadataContext **ctx)
 	return USCRIPT_ERR_SUCCESS;
 }
 
-USCRIPT_ERR
-parse_func_tbl(char *buf, struct FunctionMetadataTable** tbl, struct UScriptMetadataContext *ctx)
+USCRIPT_ERR parse_func_tbl(char *buf, struct FunctionMetadataTable** tbl, struct UScriptMetadataContext *ctx)
 {
 	int32_t funcCount = sizeof(struct FunctionMetadataRow)
 		/ (ctx->pe_hdr.string_tbl_addr - ctx->pe_hdr.function_tbl_addr);

@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include <memory.h>
 
-struct UScriptString*
-	alloc_uscript_string(int32_t str_len)
+struct UScriptString* alloc_uscript_string(int32_t str_len)
 {
 	struct UScriptString *str;
 	str = (struct UScriptString*)malloc(sizeof(int32_t) + str_len + sizeof(bool));
@@ -13,8 +12,7 @@ struct UScriptString*
 	return str;
 }
 
-struct UScriptString*
-	create_uscript_string(int32_t str_len, char *data)
+struct UScriptString* create_uscript_string(int32_t str_len, char *data)
 {
 	struct UScriptString *str = alloc_uscript_string(str_len);
 	str->data = (char*)malloc(str_len);
@@ -23,8 +21,7 @@ struct UScriptString*
 	return str;
 }
 
-void
-set_uscript_string_data(struct UScriptString **str, char *data)
+void set_uscript_string_data(struct UScriptString **str, char *data)
 {
 	// Immutable
 	if((*str)->initialized) {
@@ -37,8 +34,7 @@ set_uscript_string_data(struct UScriptString **str, char *data)
 	(*str)->initialized = true;
 }
 
-void 
-destroy_uscript_string(struct UScriptString *str)
+void destroy_uscript_string(struct UScriptString *str)
 {
 	free(str->data);
 }

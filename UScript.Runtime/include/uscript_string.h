@@ -9,16 +9,12 @@ struct UScriptString {
 	bool initialized;
 };
 
-struct UScriptString*
-alloc_uscript_string(int32_t);
+struct UScriptString* alloc_uscript_string(int32_t);
 
-struct UScriptString*
-create_uscript_string(int32_t, char *);
+struct UScriptString* create_uscript_string(int32_t, char *);
 
-void
-set_uscript_string_data(struct UScriptString **str, char *data);
+void set_uscript_string_data(struct UScriptString **str, char *data);
 
-void
-destroy_uscript_string(struct UScriptString *str);
+void destroy_uscript_string(struct UScriptString *str);
 
 #endif
