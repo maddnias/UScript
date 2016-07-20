@@ -4,6 +4,7 @@
 #include <stdint.h>
 
 typedef enum {
+	RUNTIME_DETERMINED,
 	BYTE,
 	CHAR,
 	BOOL,
@@ -12,7 +13,8 @@ typedef enum {
 	I64,
 	U16,
 	U32,
-	U64
+	U64,
+	VOID
 } uscript_datatype;
 
 typedef struct UScriptTypeDescriptor {

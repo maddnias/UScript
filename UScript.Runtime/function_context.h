@@ -11,6 +11,7 @@ typedef struct FunctionArgument {
 } FunctionArgument;
 
 typedef struct FunctionContext {
+	UScriptTypeDesc return_type_desc;
 	int32_t arg_count;
 	FunctionArgument **args;
 	EvalStack *eval_stack;

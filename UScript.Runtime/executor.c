@@ -1,6 +1,8 @@
 #include "executor.h"
 #include "opcodes.h"
 #include <stdlib.h>
+#include <memory.h>
+#include "metadata.h"
 
 //! Executes the next instruction from the current position in the codeblock.
 /*!
@@ -27,13 +29,12 @@ USCRIPT_ERR execute_next(UScriptRuntimeContext *ctx) {
 	case RET: break;
 	case LPARAM: break;
 	case LI32: 
-		execute_instr_li32(ctx);
+		execute_instr_li32(ctx, instr);
 		break;
 	default: break;
 	}
 
 	free(instr);
-
 	return USCRIPT_ERR_SUCCESS;
 }
 
@@ -70,6 +71,36 @@ USCRIPT_ERR parse_next_instr(UScriptRuntimeContext *ctx, UScriptInstruction **in
 	*instr = (UScriptInstruction*)malloc(sizeof(UScriptInstruction));
 	(*instr)->code = (UScriptOpCode)rawOp;
 	
+	switch((*instr)->code) {
+
+	case SVAR: break;
+	case LVAR: break;
+	case SLVAR: break;
+	case ADD: break;
+	case SUB: break;
+	case DIV: break;
+	case MUL: break;
+	case SCALL: 
+		(*instr)->has_operand = true;
+		(*instr)->operand_type = OPERAND_TOKEN;
+		(*instr)->operand = (char*)malloc(sizeof(int32_t));
+
+		FunctionMetadataRow *row;
+		resolve_func_token(&row, ctx->md_ctx, *(int32_t*)())
+		break;
+	case LSTR: break;
+	case RET: break;
+	case LPARAM: break;
+	case LI32: 
+		(*instr)->has_operand = true;
+		(*instr)->operand_type = OPERAND_DIRECT_I32;
+		(*instr)->stack_impact = PUSH1;
+		(*instr)->operand = (char*)malloc(sizeof(int32_t));
+		*(int32_t*)(*instr)->operand = read_next_i32(ctx);
+		break;
+	default: break;
+	}
+
 	return USCRIPT_ERR_SUCCESS;
 }
 
@@ -99,14 +130,13 @@ int32_t read_next_i32(UScriptRuntimeContext *ctx) {
 //! Executes a LI32 instruction from the current IP.
 /*!
 	\param[in] ctx The current runtime context.
+	\param[in] instr The instruction to execute.
 */
-void execute_instr_li32(UScriptRuntimeContext *ctx) {
-	int32_t operand = read_next_i32(ctx);
-
+void execute_instr_li32(UScriptRuntimeContext *ctx, UScriptInstruction *instr) {
 	StackEntry *entry;
 	stack_entry_create(&entry, I32);
 
-	*(int32_t*)entry->type_desc->data = operand;
+	*(int32_t*)entry->type_desc->data = *(int32_t*)instr->operand;
 	
 	// TODO: error handling
 	if(eval_stack_push(ctx->desc->func_ctx->eval_stack, entry) != USCRIPT_ERR_SUCCESS) {

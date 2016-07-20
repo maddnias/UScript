@@ -51,6 +51,9 @@
     <ClInclude Include="metadata_context.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="instruction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="metadata.c">

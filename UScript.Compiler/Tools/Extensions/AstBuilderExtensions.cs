@@ -21,12 +21,12 @@ namespace UScript.Compiler.Tools.Extensions
                     return UScriptDataType.Byte;
                 case "Char":
                     return UScriptDataType.Char;
-                case "Int":
-                    return UScriptDataType.Int;
-                case "String":
-                    return UScriptDataType.String;
-                case "Float":
-                    return UScriptDataType.Float;
+                case "I32":
+                    return UScriptDataType.I32;
+                //case "String":
+                //    return UScriptDataType.String;
+                //case "Float":
+                //    return UScriptDataType.Float;
             }
 
             throw new ArgumentOutOfRangeException(nameof(str));

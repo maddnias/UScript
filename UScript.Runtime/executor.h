@@ -4,14 +4,7 @@
 #include "include/metadata_context.h"
 #include "runtime_context.h"
 #include "include/error.h"
-#include "eval_stack.h"
-#include "opcodes.h"
-
-typedef struct UScriptInstruction {
-	UScriptOpCode code;
-
-
-} UScriptInstruction;
+#include "instruction.h"
 
 //! Executes the next instruction from the current position in the codeblock.
 USCRIPT_ERR execute_next(UScriptRuntimeContext *ctx);
@@ -29,6 +22,6 @@ char read_next_char(UScriptRuntimeContext *ctx);
 int32_t read_next_i32(UScriptRuntimeContext *ctx);
 
 //! Executes a LI32 instruction from the current IP.
-void execute_instr_li32(UScriptRuntimeContext *ctx);
+void execute_instr_li32(UScriptRuntimeContext *ctx, UScriptInstruction *instr);
 
 #endif

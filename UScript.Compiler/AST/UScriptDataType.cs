@@ -7,11 +7,17 @@ namespace UScript.Compiler.AST
 {
     public enum UScriptDataType
     {
+        RuntimeDetermined,
         Byte,
         Char,
-        Int,
-        String,
-        Float,
+        Bool,
+        I16,
+        I32,
+        I64,
+        U16,
+        U32,
+        U64,
+        Void,
         Undefined
     }
 }

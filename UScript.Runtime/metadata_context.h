@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "include/uscript_string.h"
+#include "data_types.h"
 
 static const int64_t HDR_MAGIC = 0x0BBE1010BBE101;
 static const int64_t FUNCTION_TOK_BASE = 0x10000000;
@@ -18,7 +19,8 @@ typedef struct UScriptPEHeader {
 } UScriptPEHeader;
 
 typedef struct FunctionMetadataRow {
-	int64_t token;
+	UScriptTypeDesc *return_type;
+	int32_t token;
 	UScriptString *name;
 	bool ep;
 	uint64_t blob_addr;

@@ -6,7 +6,6 @@
 //! Allocates memory for a new uscript_string.
 /*!
 	\param[in] str_len The length of the string data.
-
 	\return An uninitialized uscript_string, set data with {\sa uscript_string_set_data}.
 */
 UScriptString* uscript_string_alloc(int32_t str_len) {
@@ -22,7 +21,6 @@ UScriptString* uscript_string_alloc(int32_t str_len) {
 /*!
 	\param[in] str_len The length of the string.
 	\param[in] data The data of the string.
-
 	\return The newly created string.
 */
  UScriptString* uscript_string_create(int32_t str_len, char *data) {
@@ -36,9 +34,7 @@ UScriptString* uscript_string_alloc(int32_t str_len) {
 /*!
 	\param[in] str The string on which the data is set.
 	\param[in] data The string data.
-
-	\remark
-		Will fail if the uscript_string is not initialized. {\sa uscript_string_create}
+	\remark Will fail if the uscript_string is not initialized. {\sa uscript_string_create}
 */
 void uscript_string_set_data( UScriptString *str, char *data) {
 	// Immutable
@@ -64,7 +60,6 @@ void uscript_string_destroy( UScriptString *str) {
 /*!
 	\param[in] str1 The first string.
 	\param[in] str2 The second string.
-
 	\return A boolean indicating whether or not the strings are equal
 */
 bool uscript_string_is_equal( UScriptString *str1,  UScriptString *str2) {
@@ -86,11 +81,8 @@ bool uscript_string_is_equal( UScriptString *str1,  UScriptString *str2) {
 /*!
 	\param[in] str1 The first string.
 	\param[in] str2 The second string.
-
 	\return The concatenated string.
-
-	\remark
-		str1 and str2 are destroyed in the process.
+	\remark str1 and str2 are destroyed in the process.
 */
 UScriptString* uscript_string_append(UScriptString *str1, UScriptString *str2) {
 	if (!__ensure_uscript_string_initialized(2, str1, str2)) {
@@ -115,7 +107,6 @@ UScriptString* uscript_string_append(UScriptString *str1, UScriptString *str2) {
 //! Internal function to ensure all strings provided in arguments are initialized.
 /*!
 	\param[in] n_str The amount of strings to check.
-
 	\return A boolean indicating whether or not all strings are initialized.
 */
 bool __ensure_uscript_string_initialized(int n_str, ...) {

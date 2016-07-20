@@ -136,6 +136,7 @@
     <ClInclude Include="function_context.h" />
     <ClInclude Include="helper.h" />
     <ClInclude Include="include\error.h" />
+    <ClInclude Include="instruction.h" />
     <ClInclude Include="metadata.h" />
     <ClInclude Include="metadata_context.h" />
     <ClInclude Include="opcodes.h" />

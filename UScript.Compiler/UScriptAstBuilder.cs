@@ -101,7 +101,7 @@ namespace UScript.Compiler
             AddNode(new ParameterDeclarationNode
             {
                 Name = context.GetRuleContext<UScriptParser.VarContext>(0).GetText(),
-                Type = context.paramType.GetText()
+                Type = context.paramType?.GetText()
             });
 
             base.EnterParam(context);

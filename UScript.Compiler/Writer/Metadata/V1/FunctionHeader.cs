@@ -14,6 +14,7 @@ namespace UScript.Compiler.Writer.Metadata.V1
     {
         public string Name { get; set; }
         public bool IsEntrypoint { get; set; }
+        public UScriptDataType ReturnType { get; set; }
         public List<ParameterHeader> Parameters { get; set; }
         public FunctionMetadataToken Token { get; set; }
         public FunctionDeclarationNode DeclNode { get; set; }
@@ -29,6 +30,7 @@ namespace UScript.Compiler.Writer.Metadata.V1
 
         public void WriteTo(Stream dest)
         {
+            dest.WriteByte((byte) ReturnType);
             dest.Write(BitConverter.GetBytes(Name.Length), 0, sizeof(int));
             dest.Write(Encoding.ASCII.GetBytes(Name), 0, Name.Length);
             dest.WriteByte(IsEntrypoint ? (byte)0x1 : (byte)0x0);

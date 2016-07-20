@@ -63,7 +63,9 @@ namespace UScript.Compiler.AST.Visitor.V1
                 Name = node.Name,
                 IsEntrypoint = node.Name.ToLower() == "main",
                 Token = MetadataContext.FunctionTokenProvider.GenerateToken(),
-                DeclNode = node
+                DeclNode = node,
+                //TODO: check
+                ReturnType = UScriptDataType.RuntimeDetermined
             };
 
             FunctionTable.Add(ctx);

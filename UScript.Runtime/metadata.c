@@ -94,6 +94,12 @@ USCRIPT_ERR parse_func_tbl(char *buf, FunctionMetadataTable** tbl, UScriptMetada
 		pRowArr[i] = ( FunctionMetadataRow*)malloc(sizeof( FunctionMetadataRow));
 		pRowArr[i]->token = i + FUNCTION_TOK_BASE;
 
+		uscript_datatype returnType = (uscript_datatype)*(char*)buf;
+		UScriptTypeDesc *returnTypeDesc;
+		type_desc_create(&returnTypeDesc, returnType);
+		pRowArr[i]->return_type = returnTypeDesc;
+		buf++;
+
 		int32_t nameLen = *(int32_t*)buf;// UScriptString *strName = uscript_string_alloc(*(int32_t*)buf);
 		buf += sizeof(int32_t);
 		
@@ -114,6 +120,19 @@ USCRIPT_ERR parse_func_tbl(char *buf, FunctionMetadataTable** tbl, UScriptMetada
 	*tbl = ( FunctionMetadataTable*)malloc(sizeof( FunctionMetadataTable));
 	(*tbl)->func_count = funcCount;
 	(*tbl)->tbl = pRowArr;
+
+	return USCRIPT_ERR_SUCCESS;
+}
+
+//TODO: error handling
+//! Resolves a function token and returns it's metadata row.
+/*!
+	\param[out] row The row.
+	\param[in] ctx The metadata context.
+	\param[in] token The token to resolve.
+*/
+USCRIPT_ERR resolve_func_token(FunctionMetadataRow **row, UScriptMetadataContext *ctx, int64_t token) {
+	*row = ctx->func_tbl.tbl[token - FUNCTION_TOK_BASE];
 
 	return USCRIPT_ERR_SUCCESS;
 }
