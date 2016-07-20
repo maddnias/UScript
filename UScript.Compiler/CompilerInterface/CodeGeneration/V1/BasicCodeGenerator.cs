@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using UScript.Compiler.AST;
 using UScript.Compiler.CompilerInterface.CodeGeneration.Structures;
+using UScript.Compiler.Tools.Extensions;
 using UScript.Compiler.Writer.Metadata.V1;
 
 namespace UScript.Compiler.CompilerInterface.CodeGeneration.V1
@@ -102,12 +103,12 @@ namespace UScript.Compiler.CompilerInterface.CodeGeneration.V1
         public void EmitCall(IMemberReference target)
         {
             _code.WriteByte((byte) OpCode.SCALL);
-            _code.Write(BitConverter.GetBytes(target.MetadataToken.RawToken), 0, sizeof(long));
+            _code.Write(BitConverter.GetBytes(target.MetadataToken.RawToken), 0, sizeof(int));
         }
 
         public void EmitMemberReference(IMemberReference @ref)
         {
-            _code.Write(BitConverter.GetBytes(@ref.MetadataToken.RawToken), 0, sizeof(long));
+            _code.Write(BitConverter.GetBytes(@ref.MetadataToken.RawToken), 0, sizeof(int));
         }
 
         public void Dispose()

@@ -1,4 +1,3 @@
-C:\Users\mattias\Documents\Visual Studio 2015\Projects\UScript\UScript.Parser\obj\Debug\UScript.Parser.csprojResolveAssemblyReference.cache
 C:\Users\mattias\Documents\Visual Studio 2015\Projects\UScript\UScript.Parser\obj\Debug\UScript.Parser.csproj.Antlr4GeneratedCodeFileListAbsolute.txt
 C:\Users\mattias\Documents\Visual Studio 2015\Projects\UScript\UScript.Parser\bin\Debug\UScript.Parser.dll
 C:\Users\mattias\Documents\Visual Studio 2015\Projects\UScript\UScript.Parser\bin\Debug\UScript.Parser.pdb

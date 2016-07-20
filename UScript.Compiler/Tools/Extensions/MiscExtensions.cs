@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using UScript.Compiler.Writer.Metadata;
 
 namespace UScript.Compiler.Tools.Extensions
 {
     public static class MiscExtensions
     {
+        public static int GetRealToken(this IMetadataToken token)
+        {
+            return token.TokenBase + token.RawToken;
+        }
+
         public static byte[] ReadStreamFully(this Stream stream)
         {
             stream.Position = 0;

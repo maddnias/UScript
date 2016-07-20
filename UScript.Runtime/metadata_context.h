@@ -7,8 +7,8 @@
 #include "data_types.h"
 
 static const int64_t HDR_MAGIC = 0x0BBE1010BBE101;
-static const int64_t FUNCTION_TOK_BASE = 0x10000000;
-static const int64_t STRING_TOK_BASE = 0x20000000;
+static const int32_t FUNCTION_TOK_BASE = 0x1000;
+static const int32_t STRING_TOK_BASE = 0x2000;
 
 typedef struct UScriptPEHeader {
 	int64_t magic;
@@ -21,6 +21,7 @@ typedef struct UScriptPEHeader {
 typedef struct FunctionMetadataRow {
 	UScriptTypeDesc *return_type;
 	int32_t token;
+	int32_t param_count;
 	UScriptString *name;
 	bool ep;
 	uint64_t blob_addr;
@@ -35,6 +36,8 @@ typedef struct FunctionMetadataTable {
 typedef struct UScriptMetadataContext {
 	UScriptPEHeader pe_hdr;
 	FunctionMetadataTable func_tbl;
+	int32_t blob_block_size;
+	char* blob_block;
 	int32_t code_block_size;
 	char* code_block;
 } UScriptMetadataContext;

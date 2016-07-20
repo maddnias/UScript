@@ -5,7 +5,7 @@ namespace UScript.Compiler.Writer.Metadata.V1
 {
     public sealed class FunctionMetadataToken : IMetadataToken
     {
-        public int TokenBase => 0x10000000;
+        public int TokenBase => 0x1000;
         public int RawToken { get; set; }
         public void WriteTo(Stream dest)
         {

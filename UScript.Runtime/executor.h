@@ -24,4 +24,7 @@ int32_t read_next_i32(UScriptRuntimeContext *ctx);
 //! Executes a LI32 instruction from the current IP.
 void execute_instr_li32(UScriptRuntimeContext *ctx, UScriptInstruction *instr);
 
+//! Executes a SCALL instruction from the current IP.
+void execute_instr_scall(UScriptRuntimeContext *ctx, UScriptInstruction *instr);
+
 #endif

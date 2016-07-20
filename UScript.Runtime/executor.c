@@ -24,7 +24,9 @@ USCRIPT_ERR execute_next(UScriptRuntimeContext *ctx) {
 	case SUB: break;
 	case DIV: break;
 	case MUL: break;
-	case SCALL: break;
+	case SCALL: 
+		execute_instr_scall(ctx, instr);
+		break;
 	case LSTR: break;
 	case RET: break;
 	case LPARAM: break;
@@ -85,9 +87,7 @@ USCRIPT_ERR parse_next_instr(UScriptRuntimeContext *ctx, UScriptInstruction **in
 		(*instr)->operand_type = OPERAND_TOKEN;
 		(*instr)->operand = (char*)malloc(sizeof(int32_t));
 		*(int32_t*)(*instr)->operand = read_next_i32(ctx);
-
-		FunctionMetadataRow *row;
-		resolve_func_token(&row, ctx->md_ctx, *(int32_t*)(*instr)->operand);
+		(*instr)->stack_impact = FUNCTION_CALL;
 		break;
 	case LSTR: break;
 	case RET: break;
@@ -141,6 +141,26 @@ void execute_instr_li32(UScriptRuntimeContext *ctx, UScriptInstruction *instr) {
 	
 	// TODO: error handling
 	if(eval_stack_push(ctx->desc->func_ctx->eval_stack, entry) != USCRIPT_ERR_SUCCESS) {
+		return;
+	}
+}
+
+//! Executes a SCALL instruction from the current IP.
+/*!
+	\param[in] ctx The current runtime context.
+	\param[in] instr The instruction to execute.
+*/
+void execute_instr_scall(UScriptRuntimeContext* ctx, UScriptInstruction* instr) {
+	FunctionMetadataRow *funcRow;
+
+	if (resolve_func_token(&funcRow, ctx->md_ctx,
+		*(int32_t*)instr->operand) != USCRIPT_ERR_SUCCESS) {
+		//TODO: error handling
+		return;
+	}
+
+	if(ctx->desc->func_ctx->eval_stack->current_size < funcRow->param_count) {
+		//TODO: error handling
 		return;
 	}
 }

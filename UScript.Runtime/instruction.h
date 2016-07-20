@@ -13,7 +13,8 @@ typedef enum stack_impact_t {
 	PUSH1,
 	PUSH2,
 	POP1,
-	POP2
+	POP2,
+	FUNCTION_CALL
 } stack_impact_t;
 
 typedef struct UScriptInstruction {

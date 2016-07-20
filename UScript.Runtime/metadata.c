@@ -35,10 +35,17 @@ USCRIPT_ERR create_mdctx_from_file(FILE *file,  UScriptMetadataContext** ctx)
 		return res;
 	}
 
+	(*ctx)->blob_block_size = (*ctx)->pe_hdr.code_start - (*ctx)->pe_hdr.blob_addr;
+	(*ctx)->blob_block = (char*)malloc((*ctx)->blob_block_size);
 	(*ctx)->code_block_size = fileSize - (*ctx)->pe_hdr.code_start;
 	(*ctx)->code_block = (char*)malloc((*ctx)->code_block_size);
 
+	memcpy((*ctx)->blob_block, buf + (*ctx)->pe_hdr.blob_addr, (*ctx)->blob_block_size);
 	memcpy((*ctx)->code_block, buf + (*ctx)->pe_hdr.code_start, (*ctx)->code_block_size);
+
+	for(int i = 0;i < (*ctx)->func_tbl.func_count;i++) {
+		parse_function_blob_data((*ctx)->blob_block, (*ctx)->func_tbl.tbl[i]);
+	}
 
 	free(buf);
 	return USCRIPT_ERR_SUCCESS;
@@ -49,24 +56,24 @@ USCRIPT_ERR create_mdctx_from_file(FILE *file,  UScriptMetadataContext** ctx)
 	\param[in] buf The buffer containing the metadata context.
 	\param[out] ctx The metadata context.
 */
-USCRIPT_ERR create_mdctx(char *buf,  UScriptMetadataContext **ctx)
+USCRIPT_ERR create_mdctx(char *buf, UScriptMetadataContext **ctx)
 {
 	if (buf == NULL)
 		return USCRIPT_ERR_FILE_ERR;
 
-	*ctx = ( UScriptMetadataContext*)malloc(sizeof( UScriptMetadataContext));
-	**ctx = *( UScriptMetadataContext*)buf;
+	*ctx = (UScriptMetadataContext*)malloc(sizeof(UScriptMetadataContext));
+	**ctx = *(UScriptMetadataContext*)buf;
 
-	if((*ctx)->pe_hdr.magic != HDR_MAGIC) {
+	if ((*ctx)->pe_hdr.magic != HDR_MAGIC) {
 		free(ctx);
 		return USCRIPT_ERR_INVALID_MAGIC;
 	}
 
-	buf += sizeof( UScriptPEHeader);
+	buf += sizeof(UScriptPEHeader);
 
 	USCRIPT_ERR res;
-	 FunctionMetadataTable *func_tbl;
-	if((res = parse_func_tbl(buf, &func_tbl, *ctx)) != USCRIPT_ERR_SUCCESS) {
+	FunctionMetadataTable *func_tbl;
+	if ((res = parse_func_tbl(buf, &func_tbl, *ctx)) != USCRIPT_ERR_SUCCESS) {
 		free(ctx);
 		return USCRIPT_ERR_UNK;
 	}
@@ -124,6 +131,17 @@ USCRIPT_ERR parse_func_tbl(char *buf, FunctionMetadataTable** tbl, UScriptMetada
 	return USCRIPT_ERR_SUCCESS;
 }
 
+//! Parses function metadata row data from a blob block.
+/*!
+	\param[in] blob The blob to parse from.
+	\param[in] funcRow The row to apply data to.
+*/
+USCRIPT_ERR parse_function_blob_data(char* blob, FunctionMetadataRow* funcRow) {
+	funcRow->param_count = *(int32_t*)(blob + funcRow->blob_addr);
+
+	return USCRIPT_ERR_SUCCESS;
+}
+
 //TODO: error handling
 //! Resolves a function token and returns it's metadata row.
 /*!
@@ -132,7 +150,7 @@ USCRIPT_ERR parse_func_tbl(char *buf, FunctionMetadataTable** tbl, UScriptMetada
 	\param[in] token The token to resolve.
 */
 USCRIPT_ERR resolve_func_token(FunctionMetadataRow **row, UScriptMetadataContext *ctx, int32_t token) {
-	*row = ctx->func_tbl.tbl[token - FUNCTION_TOK_BASE];
+	*row = ctx->func_tbl.tbl[(token - FUNCTION_TOK_BASE) -1];
 
 	return USCRIPT_ERR_SUCCESS;
 }
