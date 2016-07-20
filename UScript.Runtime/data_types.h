@@ -21,9 +21,25 @@ typedef struct UScriptTypeDescriptor {
 	char* data;
 } UScriptTypeDesc;
 
+//! Creates a type descriptor.
+/*!
+	\param[out] desc The type descriptor.
+	\param[in] type The type of the descriptor.
+*/
 void type_desc_create(UScriptTypeDesc **desc, uscript_datatype type);
+
+//! Destroys a type descriptor.
+/*!
+	\param[in] desc The type descriptor.
+*/
 void type_desc_destroy(UScriptTypeDesc *desc);
 
+//! Determines the size of the inputted uscript_datatype.
+/*!
+	\param[in] type The type to calculate size of.
+
+	\return The size of the uscript_datatype in memory.
+*/
 int32_t uscript_type_size(uscript_datatype type);
 
 #endif

@@ -40,7 +40,7 @@ USCRIPT_ERR create_runtime_ctx(UScriptRuntimeContext **ctx, UScriptMetadataConte
 	RuntimeDescriptor *desc = (RuntimeDescriptor*)malloc(sizeof(RuntimeDescriptor));
 	(*ctx)->desc = desc;
 	(*ctx)->desc->ip = 0;
-	create_basic_function_ctx(&(*ctx)->desc->func_ctx);
+	__create_basic_function_ctx(&(*ctx)->desc->func_ctx);
 
 	return USCRIPT_ERR_SUCCESS;
 }
@@ -81,6 +81,4 @@ void execute_instr_li32(UScriptRuntimeContext *ctx) {
 	if(eval_stack_push(ctx->desc->func_ctx->eval_stack, entry) != USCRIPT_ERR_SUCCESS) {
 		return;
 	}
-
-	eval_stack_destroy(ctx->desc->func_ctx->eval_stack);
 }

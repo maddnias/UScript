@@ -39,6 +39,10 @@ USCRIPT_ERR eval_stack_push(EvalStack *stack, StackEntry *entry) {
 }
 
 // TODO: under/over flow checks
+/*!
+	\remark
+	The original stack entry on top of the stack is destroyed in the process.
+*/
 StackEntry* eval_stack_pop(EvalStack *stack) {
 	StackEntry *popped = stack->entries[stack->current_size - 1];
 	StackEntry *entry;

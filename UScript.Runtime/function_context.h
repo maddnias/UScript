@@ -16,6 +16,9 @@ typedef struct FunctionContext {
 	EvalStack *eval_stack;
 } FunctionContext;
 
-
-USCRIPT_ERR create_basic_function_ctx(FunctionContext **ctx);
+//! Creates a basic function context.
+/*!
+	\param[out] ctx The function context.
+*/
+USCRIPT_ERR __create_basic_function_ctx(FunctionContext **ctx);
 #endif

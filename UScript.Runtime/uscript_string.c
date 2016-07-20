@@ -12,23 +12,27 @@ UScriptString* uscript_string_alloc(int32_t str_len) {
 	return str;
 }
 
- UScriptString* uscript_string_create(int32_t str_len, char *data) {
+UScriptString* uscript_string_create(int32_t str_len, char *data) {
 	UScriptString *str = uscript_string_alloc(str_len);
-	uscript_string_set_data(&str, data);
+	uscript_string_set_data(str, data);
 
 	return str;
 }
 
-void uscript_string_set_data( UScriptString **str, char *data) {
+/*!
+	\remark
+	Will fail if the uscript_string is not initialized. 
+*/
+void uscript_string_set_data( UScriptString *str, char *data) {
 	// Immutable
-	if((*str)->initialized) {
+	if(str->initialized) {
 		return;
 	}
 
-	(*str)->data = (char*)malloc((*str)->len);
-	memcpy((*str)->data, data, (*str)->len);
+	str->data = (char*)malloc(str->len);
+	memcpy(str->data, data, str->len);
 
-	(*str)->initialized = true;
+	str->initialized = true;
 }
 
 void uscript_string_destroy( UScriptString *str) {
@@ -50,6 +54,10 @@ bool uscript_string_is_equal( UScriptString *str1,  UScriptString *str2) {
 	return true;
 }
 
+/*!
+	\remark
+	str1 and str2 are destroyed in the process.
+*/
 UScriptString* uscript_string_append(UScriptString *str1, UScriptString *str2) {
 	if (!__ensure_uscript_string_initialized(2, str1, str2)) {
 		return NULL;
