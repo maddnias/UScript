@@ -64,11 +64,8 @@ USCRIPT_ERR eval_stack_push(EvalStack *stack, StackEntry *entry) {
 //! Pops a stack entry from an evaluation stack.
 /*!
 	\param[in] stack The evaluation stack.
-
 	\return The entry that was popped from the evaluation stack.
-
-	\remark
-		The original stack entry on top of the stack is destroyed in the process.
+	\remark The original stack entry on top of the stack is destroyed in the process.
 */
 StackEntry* eval_stack_pop(EvalStack *stack) {
 	StackEntry *popped = stack->entries[stack->current_size - 1];

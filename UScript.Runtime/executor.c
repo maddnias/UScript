@@ -77,7 +77,6 @@ USCRIPT_ERR parse_next_instr(UScriptRuntimeContext *ctx, UScriptInstruction **in
 //! Reads a char from the current position in the codeblock.
 /*!
 	\param[in] ctx The current runtime context.
-
 	\return The read char.
 */
 char read_next_char(UScriptRuntimeContext *ctx) {
@@ -88,7 +87,6 @@ char read_next_char(UScriptRuntimeContext *ctx) {
 //! Reads a 32-bit integer from the current position in the codeblock.
 /*!
 	\param[in] ctx The current runtime context.
-
 	\return The read int32_t.
 */
 int32_t read_next_i32(UScriptRuntimeContext *ctx) {

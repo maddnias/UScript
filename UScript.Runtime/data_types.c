@@ -33,7 +33,6 @@ void type_desc_destroy(UScriptTypeDesc *desc) {
 //! Determines the size of the inputted uscript_datatype.
 /*!
 	\param[in] type The type to calculate size of.
-
 	\return The size of the uscript_datatype in memory.
 */
 int32_t uscript_type_size(uscript_datatype type) {
