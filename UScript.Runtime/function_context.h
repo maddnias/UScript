@@ -17,8 +17,5 @@ typedef struct FunctionContext {
 } FunctionContext;
 
 //! Creates a basic function context.
-/*!
-	\param[out] ctx The function context.
-*/
 USCRIPT_ERR __create_basic_function_ctx(FunctionContext **ctx);
 #endif

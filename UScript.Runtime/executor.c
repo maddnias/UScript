@@ -2,6 +2,10 @@
 #include "opcodes.h"
 #include <stdlib.h>
 
+//! Executes the next instruction from the current position in the codeblock.
+/*!
+	\param[in] ctx The runtime context.
+*/
 USCRIPT_ERR execute_next(UScriptRuntimeContext *ctx) {
 	UScriptInstruction *instr;
 	USCRIPT_ERR res;
@@ -33,6 +37,11 @@ USCRIPT_ERR execute_next(UScriptRuntimeContext *ctx) {
 	return USCRIPT_ERR_SUCCESS;
 }
 
+//! Creates a runtime context.
+/*!
+	\param[out] ctx The runtime context.
+	\param[in] mdCtx The metadata context to use.
+*/
 USCRIPT_ERR create_runtime_ctx(UScriptRuntimeContext **ctx, UScriptMetadataContext *mdCtx) {
 	*ctx = (UScriptRuntimeContext*)malloc(sizeof(UScriptRuntimeContext));
 	(*ctx)->md_ctx = mdCtx;
@@ -45,6 +54,12 @@ USCRIPT_ERR create_runtime_ctx(UScriptRuntimeContext **ctx, UScriptMetadataConte
 	return USCRIPT_ERR_SUCCESS;
 }
 
+
+//! Parses the next instruction from the current position in the codeblock.
+/*!
+	\param[in] ctx The current runtime context.
+	\param[out] instr The instruction.
+*/
 USCRIPT_ERR parse_next_instr(UScriptRuntimeContext *ctx, UScriptInstruction **instr) {
 	char rawOp = read_next_char(ctx);
 	
@@ -58,10 +73,24 @@ USCRIPT_ERR parse_next_instr(UScriptRuntimeContext *ctx, UScriptInstruction **in
 	return USCRIPT_ERR_SUCCESS;
 }
 
+
+//! Reads a char from the current position in the codeblock.
+/*!
+	\param[in] ctx The current runtime context.
+
+	\return The read char.
+*/
 char read_next_char(UScriptRuntimeContext *ctx) {
 	return *(ctx->md_ctx->code_block + ctx->desc->ip++);
 }
 
+
+//! Reads a 32-bit integer from the current position in the codeblock.
+/*!
+	\param[in] ctx The current runtime context.
+
+	\return The read int32_t.
+*/
 int32_t read_next_i32(UScriptRuntimeContext *ctx) {
 	int32_t val = *(int32_t*)(ctx->md_ctx->code_block + ctx->desc->ip);
 	ctx->desc->ip += sizeof(int32_t);
@@ -69,6 +98,10 @@ int32_t read_next_i32(UScriptRuntimeContext *ctx) {
 	return val;
 }
 
+//! Executes a LI32 instruction from the current IP.
+/*!
+	\param[in] ctx The current runtime context.
+*/
 void execute_instr_li32(UScriptRuntimeContext *ctx) {
 	int32_t operand = read_next_i32(ctx);
 

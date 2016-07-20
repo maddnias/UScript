@@ -3,6 +3,11 @@
 #include "uscript_string.h"
 #include <memory.h>
 
+//! Creates a metadata context from a file
+/*!
+	\param[in] file The file handle to read from.
+	\param[out] The metadata context.
+*/
 USCRIPT_ERR create_mdctx_from_file(FILE *file,  UScriptMetadataContext** ctx)
 {
 	if (file == NULL)
@@ -39,6 +44,11 @@ USCRIPT_ERR create_mdctx_from_file(FILE *file,  UScriptMetadataContext** ctx)
 	return USCRIPT_ERR_SUCCESS;
 }
 
+//! Creates a metadata context from a buffer
+/*!
+	\param[in] buf The buffer containing the metadata context.
+	\param[out] ctx The metadata context.
+*/
 USCRIPT_ERR create_mdctx(char *buf,  UScriptMetadataContext **ctx)
 {
 	if (buf == NULL)
@@ -66,6 +76,12 @@ USCRIPT_ERR create_mdctx(char *buf,  UScriptMetadataContext **ctx)
 	return USCRIPT_ERR_SUCCESS;
 }
 
+//! Parses a function table from the current position in a buffer.
+/*!
+	\param[in] buf The buffer that contains the function table.
+	\param[out] tbl The function table.
+	\param[in] ctx The metadata context to use.
+*/
 USCRIPT_ERR parse_func_tbl(char *buf, FunctionMetadataTable** tbl, UScriptMetadataContext *ctx)
 {
 	int32_t funcCount = sizeof( FunctionMetadataRow)
