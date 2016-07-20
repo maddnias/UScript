@@ -131,7 +131,7 @@ USCRIPT_ERR parse_func_tbl(char *buf, FunctionMetadataTable** tbl, UScriptMetada
 	\param[in] ctx The metadata context.
 	\param[in] token The token to resolve.
 */
-USCRIPT_ERR resolve_func_token(FunctionMetadataRow **row, UScriptMetadataContext *ctx, int64_t token) {
+USCRIPT_ERR resolve_func_token(FunctionMetadataRow **row, UScriptMetadataContext *ctx, int32_t token) {
 	*row = ctx->func_tbl.tbl[token - FUNCTION_TOK_BASE];
 
 	return USCRIPT_ERR_SUCCESS;

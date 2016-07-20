@@ -84,9 +84,10 @@ USCRIPT_ERR parse_next_instr(UScriptRuntimeContext *ctx, UScriptInstruction **in
 		(*instr)->has_operand = true;
 		(*instr)->operand_type = OPERAND_TOKEN;
 		(*instr)->operand = (char*)malloc(sizeof(int32_t));
+		*(int32_t*)(*instr)->operand = read_next_i32(ctx);
 
 		FunctionMetadataRow *row;
-		resolve_func_token(&row, ctx->md_ctx, *(int32_t*)())
+		resolve_func_token(&row, ctx->md_ctx, *(int32_t*)(*instr)->operand);
 		break;
 	case LSTR: break;
 	case RET: break;
