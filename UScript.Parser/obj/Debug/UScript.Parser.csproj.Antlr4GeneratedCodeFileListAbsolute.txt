@@ -1,6 +1,0 @@
-C:\Users\mattias\Documents\Visual Studio 2015\Projects\UScript\UScript.Parser\obj\Debug\UScriptLexer.cs
-C:\Users\mattias\Documents\Visual Studio 2015\Projects\UScript\UScript.Parser\obj\Debug\UScriptParser.cs
-C:\Users\mattias\Documents\Visual Studio 2015\Projects\UScript\UScript.Parser\obj\Debug\UScriptListener.cs
-C:\Users\mattias\Documents\Visual Studio 2015\Projects\UScript\UScript.Parser\obj\Debug\UScriptBaseListener.cs
-C:\Users\mattias\Documents\Visual Studio 2015\Projects\UScript\UScript.Parser\obj\Debug\UScriptVisitor.cs
-C:\Users\mattias\Documents\Visual Studio 2015\Projects\UScript\UScript.Parser\obj\Debug\UScriptBaseVisitor.cs
