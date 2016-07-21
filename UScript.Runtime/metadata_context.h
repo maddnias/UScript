@@ -22,10 +22,12 @@ typedef struct FunctionMetadataRow {
 	UScriptTypeDesc *return_type;
 	int32_t token;
 	int32_t param_count;
+	UScriptTypeDesc **param_descriptors;
 	UScriptString *name;
 	bool ep;
 	uint64_t blob_addr;
 	uint64_t code_addr;
+	uint64_t code_relative_addr;
 } FunctionMetadataRow;
 
 typedef struct FunctionMetadataTable {

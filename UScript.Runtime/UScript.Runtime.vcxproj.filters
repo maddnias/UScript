@@ -74,5 +74,11 @@
     <ClCompile Include="data_types.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="runtime_context.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="opcodes.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -20,5 +20,7 @@ USCRIPT_ERR parse_function_blob_data(char *blob, FunctionMetadataRow *funcRow);
 //! Resolves a function token and returns it's metadata row.
 USCRIPT_ERR resolve_func_token(FunctionMetadataRow **row, UScriptMetadataContext *ctx, int32_t token);
 
-//! Gets the amount of parameters in a function
+//! 
+USCRIPT_ERR read_func_arg_type(FunctionMetadataRow *row, int32_t idx, UScriptTypeDesc **desc);
+
 #endif

@@ -45,6 +45,8 @@ USCRIPT_ERR create_mdctx_from_file(FILE *file,  UScriptMetadataContext** ctx)
 
 	for(int i = 0;i < (*ctx)->func_tbl.func_count;i++) {
 		parse_function_blob_data((*ctx)->blob_block, (*ctx)->func_tbl.tbl[i]);
+		(*ctx)->func_tbl.tbl[i]->code_relative_addr = 
+			(*ctx)->func_tbl.tbl[i]->code_addr - (*ctx)->pe_hdr.code_start;
 	}
 
 	free(buf);
@@ -137,7 +139,17 @@ USCRIPT_ERR parse_func_tbl(char *buf, FunctionMetadataTable** tbl, UScriptMetada
 	\param[in] funcRow The row to apply data to.
 */
 USCRIPT_ERR parse_function_blob_data(char* blob, FunctionMetadataRow* funcRow) {
-	funcRow->param_count = *(int32_t*)(blob + funcRow->blob_addr);
+	char *fixedAddr = blob + funcRow->blob_addr;
+	funcRow->param_count = *(int32_t*)(fixedAddr);
+	funcRow->param_descriptors = (UScriptTypeDesc**)malloc(funcRow->param_count * sizeof(UScriptTypeDesc*));
+
+	// skip over count
+	fixedAddr += sizeof(int32_t);
+
+	for(int i = 0;i < funcRow->param_count;i++) {
+		funcRow->param_descriptors[i] = (UScriptTypeDesc*)malloc(sizeof(UScriptTypeDesc));
+		type_desc_create(&funcRow->param_descriptors[i], (uscript_datatype)*fixedAddr++);
+	}
 
 	return USCRIPT_ERR_SUCCESS;
 }

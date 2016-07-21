@@ -50,6 +50,8 @@ int32_t uscript_type_size(uscript_datatype type) {
 	case I64: 
 	case U64:
 		return 8;
+	case RUNTIME_DETERMINED:
+		return 0;
 	default: 
 		return -1;
 	}

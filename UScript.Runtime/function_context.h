@@ -4,6 +4,7 @@
 #include "data_types.h"
 #include <stdint.h>
 #include "eval_stack.h"
+#include "include/metadata.h"
 
 typedef struct FunctionArgument {
 	UScriptTypeDesc type_desc;
@@ -19,4 +20,10 @@ typedef struct FunctionContext {
 
 //! Creates a basic function context.
 USCRIPT_ERR __create_basic_function_ctx(FunctionContext **ctx);
+
+//! Creates an empty function context.
+USCRIPT_ERR create_function_context(FunctionContext **ctx);
+
+//! Adds arguments to the selected function context from the selected evaluation stack.
+USCRIPT_ERR populate_function_args(FunctionContext *ctx, EvalStack *stack, FunctionMetadataRow *row);
 #endif

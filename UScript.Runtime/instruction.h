@@ -1,6 +1,21 @@
 #ifndef INSTRUCTION_H
 #define INSTRUCTION_H
-#include "opcodes.h"
+
+typedef enum UScriptOpCode
+{
+	SVAR,
+	LVAR,
+	SLVAR,
+	ADD,
+	SUB,
+	DIV,
+	MUL,
+	SCALL,
+	LSTR,
+	RET,
+	LPARAM,
+	LI32
+} UScriptOpCode;
 
 typedef enum operand_type_t {
 	OPERAND_TOKEN,

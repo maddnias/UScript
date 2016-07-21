@@ -13,7 +13,7 @@ namespace UScript.Compiler.Tools.Extensions
         public static UScriptDataType UScriptTypeFromString(this string str)
         {
             if (string.IsNullOrEmpty(str))
-                return UScriptDataType.Undefined;
+                return UScriptDataType.RuntimeDetermined;
 
             switch (str)
             {

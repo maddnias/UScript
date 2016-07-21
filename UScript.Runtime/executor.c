@@ -29,7 +29,9 @@ USCRIPT_ERR execute_next(UScriptRuntimeContext *ctx) {
 		break;
 	case LSTR: break;
 	case RET: break;
-	case LPARAM: break;
+	case LPARAM: 
+		execute_instr_lparam(ctx, instr);
+		break;
 	case LI32: 
 		execute_instr_li32(ctx, instr);
 		break;
@@ -39,24 +41,6 @@ USCRIPT_ERR execute_next(UScriptRuntimeContext *ctx) {
 	free(instr);
 	return USCRIPT_ERR_SUCCESS;
 }
-
-//! Creates a runtime context.
-/*!
-	\param[out] ctx The runtime context.
-	\param[in] mdCtx The metadata context to use.
-*/
-USCRIPT_ERR create_runtime_ctx(UScriptRuntimeContext **ctx, UScriptMetadataContext *mdCtx) {
-	*ctx = (UScriptRuntimeContext*)malloc(sizeof(UScriptRuntimeContext));
-	(*ctx)->md_ctx = mdCtx;
-
-	RuntimeDescriptor *desc = (RuntimeDescriptor*)malloc(sizeof(RuntimeDescriptor));
-	(*ctx)->desc = desc;
-	(*ctx)->desc->ip = 0;
-	__create_basic_function_ctx(&(*ctx)->desc->func_ctx);
-
-	return USCRIPT_ERR_SUCCESS;
-}
-
 
 //! Parses the next instruction from the current position in the codeblock.
 /*!
@@ -91,7 +75,13 @@ USCRIPT_ERR parse_next_instr(UScriptRuntimeContext *ctx, UScriptInstruction **in
 		break;
 	case LSTR: break;
 	case RET: break;
-	case LPARAM: break;
+	case LPARAM: 
+		(*instr)->has_operand = true;
+		(*instr)->operand_type = OPERAND_DIRECT_I32;
+		(*instr)->stack_impact = PUSH1;
+		(*instr)->operand = (char*)malloc(sizeof(int32_t));
+		*(int32_t*)(*instr)->operand = read_next_i32(ctx);
+		break;
 	case LI32: 
 		(*instr)->has_operand = true;
 		(*instr)->operand_type = OPERAND_DIRECT_I32;
@@ -112,7 +102,7 @@ USCRIPT_ERR parse_next_instr(UScriptRuntimeContext *ctx, UScriptInstruction **in
 	\return The read char.
 */
 char read_next_char(UScriptRuntimeContext *ctx) {
-	return *(ctx->md_ctx->code_block + ctx->desc->ip++);
+	return *(ctx->md_ctx->code_block + ctx->cur_desc->ip++);
 }
 
 
@@ -122,45 +112,8 @@ char read_next_char(UScriptRuntimeContext *ctx) {
 	\return The read int32_t.
 */
 int32_t read_next_i32(UScriptRuntimeContext *ctx) {
-	int32_t val = *(int32_t*)(ctx->md_ctx->code_block + ctx->desc->ip);
-	ctx->desc->ip += sizeof(int32_t);
+	int32_t val = *(int32_t*)(ctx->md_ctx->code_block + ctx->cur_desc->ip);
+	ctx->cur_desc->ip += sizeof(int32_t);
 
 	return val;
-}
-
-//! Executes a LI32 instruction from the current IP.
-/*!
-	\param[in] ctx The current runtime context.
-	\param[in] instr The instruction to execute.
-*/
-void execute_instr_li32(UScriptRuntimeContext *ctx, UScriptInstruction *instr) {
-	StackEntry *entry;
-	stack_entry_create(&entry, I32);
-
-	*(int32_t*)entry->type_desc->data = *(int32_t*)instr->operand;
-	
-	// TODO: error handling
-	if(eval_stack_push(ctx->desc->func_ctx->eval_stack, entry) != USCRIPT_ERR_SUCCESS) {
-		return;
-	}
-}
-
-//! Executes a SCALL instruction from the current IP.
-/*!
-	\param[in] ctx The current runtime context.
-	\param[in] instr The instruction to execute.
-*/
-void execute_instr_scall(UScriptRuntimeContext* ctx, UScriptInstruction* instr) {
-	FunctionMetadataRow *funcRow;
-
-	if (resolve_func_token(&funcRow, ctx->md_ctx,
-		*(int32_t*)instr->operand) != USCRIPT_ERR_SUCCESS) {
-		//TODO: error handling
-		return;
-	}
-
-	if(ctx->desc->func_ctx->eval_stack->current_size < funcRow->param_count) {
-		//TODO: error handling
-		return;
-	}
 }
