@@ -83,7 +83,7 @@
     <ClCompile Include="opcodes.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="runtime_obj.cpp">
+    <ClCompile Include="runtime_obj.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

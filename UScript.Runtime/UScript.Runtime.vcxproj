@@ -153,7 +153,7 @@
     <ClCompile Include="metadata.c" />
     <ClCompile Include="opcodes.c" />
     <ClCompile Include="runtime_context.c" />
-    <ClCompile Include="runtime_obj.cpp" />
+    <ClCompile Include="runtime_obj.c" />
     <ClCompile Include="uscript_string.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

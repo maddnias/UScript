@@ -76,4 +76,16 @@ void instr_execute_add(UScriptRuntimeContext *ctx, UScriptInstruction *instr) {
 	//TODO: error handling
 	RuntimeObject *val1 = eval_stack_pop(ctx->cur_frame->func_ctx->eval_stack)->obj;
 	RuntimeObject *val2 = eval_stack_pop(ctx->cur_frame->func_ctx->eval_stack)->obj;
+
+	if(runtime_obj_add(val1, val2) != USCRIPT_ERR_SUCCESS) {
+		//TODO: ERROR HANDLING
+	}
+
+	runtime_obj_destroy(val2);
+
+	StackEntry *entry;
+	stack_entry_create(&entry, val1->desc.type);
+	entry->obj = val1;
+
+	eval_stack_push(ctx->cur_frame->func_ctx->eval_stack, entry);
 }
