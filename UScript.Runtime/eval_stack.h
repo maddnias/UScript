@@ -2,11 +2,11 @@
 #define EVAL_STACK_H
 
 #include <stdint.h>
-#include "data_types.h"
+#include "runtime_obj.h"
 #include "include/error.h"
 
 typedef struct StackEntry {
-	UScriptTypeDesc* type_desc;
+	RuntimeObject* obj;
 } StackEntry;
 
 typedef struct EvalStack {

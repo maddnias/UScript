@@ -9,7 +9,8 @@
 */
 void stack_entry_create(StackEntry **entry, uscript_datatype type) {
 	*entry = (StackEntry*)malloc(sizeof(StackEntry));
-	type_desc_create(&(*entry)->type_desc, type);
+
+	runtime_obj_create(&(*entry)->obj, type);
 }
 
 //! Destroys a stack entry
@@ -17,7 +18,7 @@ void stack_entry_create(StackEntry **entry, uscript_datatype type) {
 	\param[in] entry The stack entry to destroy.
 */
 void stack_entry_destroy(StackEntry *entry) {
-	type_desc_destroy(entry->type_desc);
+	type_desc_destroy(&entry->obj->desc);
 	free(entry);
 }
 
@@ -71,11 +72,11 @@ StackEntry* eval_stack_pop(EvalStack *stack) {
 	StackEntry *popped = stack->entries[stack->current_size - 1];
 	StackEntry *entry;
 	
-	stack_entry_create(&entry, popped->type_desc->type);
-	entry->type_desc->is_array = popped->type_desc->is_array;
+	stack_entry_create(&entry, popped->obj->desc.type);
+	entry->obj->desc.is_array = popped->obj->desc.is_array;
 
-	memcpy(entry->type_desc->data, popped->type_desc->data,
-		uscript_type_size(popped->type_desc->type));
+	memcpy(entry->obj->data, popped->obj->data,
+		uscript_type_size(popped->obj->desc.type));
 
 	stack_entry_destroy(stack->entries[stack->current_size-- -1]);
 	return entry;

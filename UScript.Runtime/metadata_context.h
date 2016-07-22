@@ -23,7 +23,7 @@ typedef struct FunctionMetadataRow {
 	int32_t token;
 	int32_t param_count;
 	UScriptTypeDesc **param_descriptors;
-	UScriptString *name;
+	char *name;
 	bool ep;
 	uint64_t blob_addr;
 	uint64_t code_addr;

@@ -112,9 +112,10 @@ USCRIPT_ERR parse_func_tbl(char *buf, FunctionMetadataTable** tbl, UScriptMetada
 		int32_t nameLen = *(int32_t*)buf;// UScriptString *strName = uscript_string_alloc(*(int32_t*)buf);
 		buf += sizeof(int32_t);
 		
-		//uscript_string_set_data(&strName, buf);
-		pRowArr[i]->name = uscript_string_create(nameLen, buf);
-		buf += pRowArr[i]->name->len;
+		pRowArr[i]->name = (char*)malloc(nameLen+1);
+		memcpy(pRowArr[i]->name, buf, nameLen);
+		*(buf + nameLen +1) = '\0';
+		buf += nameLen;
 
 		pRowArr[i]->ep = *(char*)buf;
 		buf++;
@@ -162,6 +163,11 @@ USCRIPT_ERR parse_function_blob_data(char* blob, FunctionMetadataRow* funcRow) {
 	\param[in] token The token to resolve.
 */
 USCRIPT_ERR resolve_func_token(FunctionMetadataRow **row, UScriptMetadataContext *ctx, int32_t token) {
+	if (token - FUNCTION_TOK_BASE < 0 ||
+		token - FUNCTION_TOK_BASE > ctx->func_tbl.func_count) {
+		return USCRIPT_ERR_TOKEN_MISSING;
+	}
+
 	*row = ctx->func_tbl.tbl[(token - FUNCTION_TOK_BASE) -1];
 
 	return USCRIPT_ERR_SUCCESS;

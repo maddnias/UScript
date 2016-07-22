@@ -7,7 +7,7 @@
 #include "include/metadata.h"
 
 typedef struct FunctionArgument {
-	UScriptTypeDesc type_desc;
+	RuntimeObject obj;
 	int32_t idx;
 } FunctionArgument;
 
@@ -22,7 +22,7 @@ typedef struct FunctionContext {
 USCRIPT_ERR __create_basic_function_ctx(FunctionContext **ctx);
 
 //! Creates an empty function context.
-USCRIPT_ERR create_function_context(FunctionContext **ctx);
+USCRIPT_ERR function_context_create(FunctionContext **ctx);
 
 //! Adds arguments to the selected function context from the selected evaluation stack.
 USCRIPT_ERR populate_function_args(FunctionContext *ctx, EvalStack *stack, FunctionMetadataRow *row);

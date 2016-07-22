@@ -20,20 +20,22 @@ USCRIPT_ERR execute_next(UScriptRuntimeContext *ctx) {
 	case SVAR: break;
 	case LVAR: break;
 	case SLVAR: break;
-	case ADD: break;
+	case ADD: 
+		instr_execute_add(ctx, instr);
+		break;
 	case SUB: break;
 	case DIV: break;
 	case MUL: break;
 	case SCALL: 
-		execute_instr_scall(ctx, instr);
+		instr_execute_scall(ctx, instr);
 		break;
 	case LSTR: break;
 	case RET: break;
 	case LPARAM: 
-		execute_instr_lparam(ctx, instr);
+		instr_execute_lparam(ctx, instr);
 		break;
 	case LI32: 
-		execute_instr_li32(ctx, instr);
+		instr_execute_li32(ctx, instr);
 		break;
 	default: break;
 	}
@@ -62,7 +64,10 @@ USCRIPT_ERR parse_next_instr(UScriptRuntimeContext *ctx, UScriptInstruction **in
 	case SVAR: break;
 	case LVAR: break;
 	case SLVAR: break;
-	case ADD: break;
+	case ADD: 
+		(*instr)->has_operand = false;
+		(*instr)->stack_impact = POP1;
+		break;
 	case SUB: break;
 	case DIV: break;
 	case MUL: break;
@@ -102,7 +107,7 @@ USCRIPT_ERR parse_next_instr(UScriptRuntimeContext *ctx, UScriptInstruction **in
 	\return The read char.
 */
 char read_next_char(UScriptRuntimeContext *ctx) {
-	return *(ctx->md_ctx->code_block + ctx->cur_desc->ip++);
+	return *(ctx->md_ctx->code_block + ctx->cur_frame->ip++);
 }
 
 
@@ -112,8 +117,8 @@ char read_next_char(UScriptRuntimeContext *ctx) {
 	\return The read int32_t.
 */
 int32_t read_next_i32(UScriptRuntimeContext *ctx) {
-	int32_t val = *(int32_t*)(ctx->md_ctx->code_block + ctx->cur_desc->ip);
-	ctx->cur_desc->ip += sizeof(int32_t);
+	int32_t val = *(int32_t*)(ctx->md_ctx->code_block + ctx->cur_frame->ip);
+	ctx->cur_frame->ip += sizeof(int32_t);
 
 	return val;
 }

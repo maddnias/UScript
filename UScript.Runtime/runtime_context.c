@@ -6,7 +6,7 @@
 	\param[out] ctx The runtime context.
 	\param[in] mdCtx The metadata context to use.
 */
-USCRIPT_ERR create_runtime_ctx(UScriptRuntimeContext **ctx, UScriptMetadataContext *mdCtx) {
+USCRIPT_ERR runtime_ctx_create(UScriptRuntimeContext **ctx, UScriptMetadataContext *mdCtx) {
 	*ctx = (UScriptRuntimeContext*)malloc(sizeof(UScriptRuntimeContext));
 	(*ctx)->md_ctx = mdCtx;
 
@@ -15,7 +15,7 @@ USCRIPT_ERR create_runtime_ctx(UScriptRuntimeContext **ctx, UScriptMetadataConte
 
 	(*ctx)->call_stack[0] = (StackFrame*)malloc(sizeof(StackFrame));
 	(*ctx)->call_stack[0]->ip = 0;
-	(*ctx)->cur_desc = (*ctx)->call_stack[0];
+	(*ctx)->cur_frame = (*ctx)->call_stack[0];
 
 	// Create context for entry code
 	__create_basic_function_ctx(&(*ctx)->call_stack[0]->func_ctx);
@@ -28,11 +28,11 @@ USCRIPT_ERR create_runtime_ctx(UScriptRuntimeContext **ctx, UScriptMetadataConte
 	\param[in] ctx The runtime context.
 	\param[out] frame The stack frame.
 */
-USCRIPT_ERR create_stack_frame(UScriptRuntimeContext *ctx, StackFrame **frame) {
+USCRIPT_ERR stack_frame_create(UScriptRuntimeContext *ctx, StackFrame **frame) {
 	*frame = (StackFrame*)malloc(sizeof(StackFrame));
 	(*frame)->ip = 0;
 	
-	create_function_context(&(*frame)->func_ctx);
+	function_context_create(&(*frame)->func_ctx);
 
 	return USCRIPT_ERR_SUCCESS;
 }
@@ -41,16 +41,16 @@ USCRIPT_ERR create_stack_frame(UScriptRuntimeContext *ctx, StackFrame **frame) {
 /*!
 	\param[in] ctx The runtime context to use.
 */
-USCRIPT_ERR create_push_stack_frame(UScriptRuntimeContext *ctx) {
+USCRIPT_ERR stack_frame_create_push(UScriptRuntimeContext *ctx) {
 	StackFrame *frame;
 	USCRIPT_ERR res;
 
-	if((res = create_stack_frame(ctx, &frame)) != USCRIPT_ERR_SUCCESS) {
+	if((res = stack_frame_create(ctx, &frame)) != USCRIPT_ERR_SUCCESS) {
 		return res;
 	}
 
 	ctx->call_stack[ctx->frame_count] = frame;
-	ctx->cur_desc = ctx->call_stack[ctx->frame_count++];
+	ctx->cur_frame = ctx->call_stack[ctx->frame_count++];
 
 	return USCRIPT_ERR_SUCCESS;
 }

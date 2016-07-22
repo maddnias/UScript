@@ -14,19 +14,24 @@ typedef struct StackFrame {
 
 typedef struct UScriptRuntimeContext {
 	UScriptMetadataContext* md_ctx;
-	StackFrame* cur_desc;
+	StackFrame* cur_frame;
 	int32_t frame_count; 
 	StackFrame** call_stack;
 } UScriptRuntimeContext;
 
+typedef struct RuntimeError {
+	USCRIPT_ERR err_code;
+	StackFrame frame;
+} RuntimeError;
+
 //! Creates a runtime context.
-USCRIPT_ERR create_runtime_ctx(UScriptRuntimeContext **ctx, UScriptMetadataContext *mdCtx);
+USCRIPT_ERR runtime_ctx_create(UScriptRuntimeContext **ctx, UScriptMetadataContext *mdCtx);
 
 //! Creates a stack frame.
-USCRIPT_ERR create_stack_frame(UScriptRuntimeContext *ctx, StackFrame **frame);
+USCRIPT_ERR stack_frame_create(UScriptRuntimeContext *ctx, StackFrame **frame);
 
 //! Create and push a new stack frame.
-USCRIPT_ERR create_push_stack_frame(UScriptRuntimeContext *ctx);
+USCRIPT_ERR stack_frame_create_push(UScriptRuntimeContext *ctx);
 
 //! Helper method to get previous stack frame from a runtime context.
 StackFrame* stack_frame_get_previous(UScriptRuntimeContext *ctx);

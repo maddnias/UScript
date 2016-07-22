@@ -21,7 +21,7 @@ USCRIPT_ERR __create_basic_function_ctx(FunctionContext **ctx) {
 /*!
 	\param[in] ctx The function context.
 */
-USCRIPT_ERR create_function_context(FunctionContext **ctx) {
+USCRIPT_ERR function_context_create(FunctionContext **ctx) {
 	*ctx = (FunctionContext*)malloc(sizeof(FunctionContext));
 	(*ctx)->arg_count = 0;
 	eval_stack_create(&(*ctx)->eval_stack);
@@ -42,18 +42,26 @@ USCRIPT_ERR populate_function_args(FunctionContext* ctx, EvalStack* stack, Funct
 	for(int i = 0;i < ctx->arg_count;i++) {
 		ctx->args[i] = (FunctionArgument*)malloc(sizeof(FunctionArgument));
 		ctx->args[i]->idx = i;
-		ctx->args[i]->type_desc = *row->param_descriptors[i];
+		ctx->args[i]->obj.desc = *row->param_descriptors[i];
 
-		int32_t typeSize = uscript_type_size(ctx->args[i]->type_desc.type);
+		int32_t typeSize = uscript_type_size(ctx->args[i]->obj.desc.type);
 
 		StackEntry *entry = eval_stack_pop(stack);
 		if (typeSize == 0 /* RUNTIME_DETERMINED */) {
-			typeSize = uscript_type_size(entry->type_desc->type);
-			ctx->args[i]->type_desc.type = entry->type_desc->type;
+			typeSize = uscript_type_size(entry->obj->desc.type);
+			ctx->args[i]->obj.desc.type = entry->obj->desc.type;
 		}
 
-		ctx->args[i]->type_desc.data = (char*)malloc(typeSize);
-		memcpy(ctx->args[i]->type_desc.data, entry->type_desc->data, typeSize);
+		ctx->args[i]->obj.data = (char*)malloc(typeSize);
+		memcpy(ctx->args[i]->obj.data, entry->obj->data, typeSize);
+		stack_entry_destroy(entry);
+	}
+
+	// Reverse arguments for correct popping order
+	for (int i = 0; i < ctx->arg_count / 2; i++) {
+		FunctionArgument *tmp = ctx->args[i];
+		ctx->args[i] = ctx->args[ctx->arg_count - (i + 1)];
+		ctx->args[ctx->arg_count - (i + 1)] = tmp;
 	}
 
 	return USCRIPT_ERR_SUCCESS;

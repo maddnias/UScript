@@ -8,15 +8,9 @@
 */
 void type_desc_create(UScriptTypeDesc **desc, uscript_datatype type) {
 	*desc = (UScriptTypeDesc*)malloc(sizeof(UScriptTypeDesc));
-	(*desc)->type = type;
 	(*desc)->is_array = false;
-	(*desc)->data = NULL;
-	int32_t typeSize = uscript_type_size(type);
-
-	//TODO: error handling
-	if (typeSize != -1) {
-		(*desc)->data = (char*)malloc(uscript_type_size(type));
-	}
+	(*desc)->type = type;
+	(*desc)->array_size = 0;
 }
 
 //! Destroys a type descriptor.
@@ -24,9 +18,6 @@ void type_desc_create(UScriptTypeDesc **desc, uscript_datatype type) {
 	\param[in] desc The type descriptor.
 */
 void type_desc_destroy(UScriptTypeDesc *desc) {
-	if (desc->data != NULL) {
-		free(desc->data);
-	}
 	free(desc);
 }
 
