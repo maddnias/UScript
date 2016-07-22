@@ -61,7 +61,7 @@ USCRIPT_ERR runtime_obj_add(RuntimeObject* obj1, RuntimeObject* obj2) {
 		case BOOL: break;
 		case I16: break;
 		case I32: 
-			*(int32_t*)obj1->data = *(int32_t*)obj1->data + *(int32_t*)obj2->data;
+			*(int32_t*)obj1->data += *(int32_t*)obj2->data;
 			break;
 		case I64: break;
 		case U16: break;
