@@ -29,7 +29,8 @@ typedef enum stack_impact_t {
 	PUSH2,
 	POP1,
 	POP2,
-	FUNCTION_CALL
+	FUNCTION_CALL,
+	RETURN_STMT
 } stack_impact_t;
 
 typedef struct UScriptInstruction {

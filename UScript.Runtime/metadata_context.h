@@ -40,6 +40,7 @@ typedef struct UScriptMetadataContext {
 	FunctionMetadataTable func_tbl;
 	int32_t blob_block_size;
 	char* blob_block;
+	int32_t entry_code_block_size;
 	int32_t code_block_size;
 	char* code_block;
 } UScriptMetadataContext;

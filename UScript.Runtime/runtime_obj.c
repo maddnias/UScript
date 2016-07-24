@@ -81,3 +81,9 @@ USCRIPT_ERR runtime_obj_add(RuntimeObject* obj1, RuntimeObject* obj2) {
 
 	return USCRIPT_ERR_SUCCESS;
 }
+
+USCRIPT_ERR runtime_obj_change_type(RuntimeObject* obj, uscript_datatype type) {
+	//TODO: error handling
+
+	return USCRIPT_ERR_UNK;
+}

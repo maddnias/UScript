@@ -30,7 +30,9 @@ USCRIPT_ERR execute_next(UScriptRuntimeContext *ctx) {
 		instr_execute_scall(ctx, instr);
 		break;
 	case LSTR: break;
-	case RET: break;
+	case RET: 
+		instr_execute_ret(ctx, instr);
+		break;
 	case LPARAM: 
 		instr_execute_lparam(ctx, instr);
 		break;
@@ -50,6 +52,13 @@ USCRIPT_ERR execute_next(UScriptRuntimeContext *ctx) {
 	\param[out] instr The instruction.
 */
 USCRIPT_ERR parse_next_instr(UScriptRuntimeContext *ctx, UScriptInstruction **instr) {
+	// we're in entry code
+	if(ctx->frame_count == 1
+		&& ctx->cur_frame->ip >= ctx->md_ctx->entry_code_block_size) {
+		// End of code reached
+		return USCRIPT_ERR_UNK;
+	}
+	
 	char rawOp = read_next_char(ctx);
 	
 	if(rawOp < 0 || rawOp > USCRIPT_OP_MAX) {
@@ -79,7 +88,10 @@ USCRIPT_ERR parse_next_instr(UScriptRuntimeContext *ctx, UScriptInstruction **in
 		(*instr)->stack_impact = FUNCTION_CALL;
 		break;
 	case LSTR: break;
-	case RET: break;
+	case RET: 
+		(*instr)->has_operand = false;
+		(*instr)->stack_impact = RETURN_STMT;
+		break;
 	case LPARAM: 
 		(*instr)->has_operand = true;
 		(*instr)->operand_type = OPERAND_DIRECT_I32;

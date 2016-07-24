@@ -49,6 +49,12 @@ USCRIPT_ERR create_mdctx_from_file(FILE *file,  UScriptMetadataContext** ctx)
 			(*ctx)->func_tbl.tbl[i]->code_addr - (*ctx)->pe_hdr.code_start;
 	}
 
+	if ((*ctx)->func_tbl.func_count > 0) {
+		(*ctx)->entry_code_block_size = (*ctx)->func_tbl.tbl[0]->code_addr - (*ctx)->pe_hdr.code_start;
+	} else {
+		//TODO: fix this
+	}
+
 	free(buf);
 	return USCRIPT_ERR_SUCCESS;
 }

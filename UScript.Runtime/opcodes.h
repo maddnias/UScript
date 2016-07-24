@@ -12,6 +12,9 @@ void instr_execute_scall(UScriptRuntimeContext *ctx, UScriptInstruction *instr);
 //! Executes a LPARAM instruction from the current IP.
 void instr_execute_lparam(UScriptRuntimeContext *ctx, UScriptInstruction *instr);
 
-//! Executes a ADD instruction from the current IP.
+//! Executes an ADD instruction from the current IP.
 void instr_execute_add(UScriptRuntimeContext *ctx, UScriptInstruction *instr);
+
+//! Executes a RET instruction from the current IP.
+void instr_execute_ret(UScriptRuntimeContext *ctx, UScriptInstruction *instr);
 #endif

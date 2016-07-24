@@ -34,5 +34,7 @@ USCRIPT_ERR stack_frame_create(UScriptRuntimeContext *ctx, StackFrame **frame);
 USCRIPT_ERR stack_frame_create_push(UScriptRuntimeContext *ctx);
 
 //! Helper method to get previous stack frame from a runtime context.
-StackFrame* stack_frame_get_previous(UScriptRuntimeContext *ctx);
+USCRIPT_ERR call_stack_get_previous_frame(UScriptRuntimeContext *ctx, StackFrame **frame);
+
+USCRIPT_ERR call_stack_unwind_one(UScriptRuntimeContext *ctx, StackFrame **frame);
 #endif

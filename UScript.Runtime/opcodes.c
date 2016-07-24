@@ -40,7 +40,10 @@ void instr_execute_scall(UScriptRuntimeContext *ctx, UScriptInstruction *instr) 
 		return;
 	}
 
-	StackFrame *previousFrame = stack_frame_get_previous(ctx);
+	ctx->call_stack[ctx->frame_count - 1]->func_ctx->return_type_desc = *funcRow->return_type;
+
+	StackFrame *previousFrame;
+	call_stack_get_previous_frame(ctx, &previousFrame);
 
 	populate_function_args(ctx->cur_frame->func_ctx, previousFrame->func_ctx->eval_stack,
 		funcRow);
@@ -67,7 +70,7 @@ void instr_execute_lparam(UScriptRuntimeContext *ctx, UScriptInstruction *instr)
 	eval_stack_push(ctx->cur_frame->func_ctx->eval_stack, entry);
 }
 
-//! Executes a ADD instruction from the current IP.
+//! Executes an ADD instruction from the current IP.
 /*!
 	\param[in] ctx The current runtime context.
 	\param[in] instr The instruction to execute.
@@ -95,4 +98,37 @@ void instr_execute_add(UScriptRuntimeContext *ctx, UScriptInstruction *instr) {
 	stack_entry_destroy(entry2);
 
 	eval_stack_push(ctx->cur_frame->func_ctx->eval_stack, entry);
+}
+
+//! Executes a RET instruction from the current IP.
+/*!
+	\param[in] ctx The current runtime context.
+	\param[in] instr The instruction to execute.
+*/
+void instr_execute_ret(UScriptRuntimeContext *ctx, UScriptInstruction *instr) {
+	//TODO: error handling
+	UScriptTypeDesc retTypeDesc;
+	StackFrame *lastFrame, *targetFrame;
+	StackEntry *retval = NULL;
+
+	call_stack_get_previous_frame(ctx, &targetFrame);
+	call_stack_unwind_one(ctx, &lastFrame);
+
+	retTypeDesc = lastFrame->func_ctx->return_type_desc;
+	if (retTypeDesc.type != VOID) {
+		if (eval_stack_pop(lastFrame->func_ctx->eval_stack, &retval) != USCRIPT_ERR_SUCCESS) {
+			//TODO: error handling
+		}
+
+		if(retTypeDesc.type != retval->obj->desc.type) {
+			if(retTypeDesc.type == RUNTIME_DETERMINED) {
+				retTypeDesc.type = retval->obj->desc.type;
+			}
+		}
+
+		if(eval_stack_push(targetFrame->func_ctx->eval_stack, retval) != USCRIPT_ERR_SUCCESS) {
+			//TODO: error handling
+		}
+	}
+
 }

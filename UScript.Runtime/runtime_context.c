@@ -59,10 +59,21 @@ USCRIPT_ERR stack_frame_create_push(UScriptRuntimeContext *ctx) {
 /*!
 	\param[in] ctx The runtime context to use.
 */
-StackFrame* stack_frame_get_previous(UScriptRuntimeContext *ctx) {
+USCRIPT_ERR call_stack_get_previous_frame(UScriptRuntimeContext *ctx, StackFrame **frame) {
 	if(ctx->frame_count == 1) {
 		//TODO: error handling
 	}
 
-	return ctx->call_stack[ctx->frame_count - 2];
+	*frame = ctx->call_stack[ctx->frame_count - 2];
+	return USCRIPT_ERR_SUCCESS; 
+}
+
+USCRIPT_ERR call_stack_unwind_one(UScriptRuntimeContext* ctx, StackFrame** frame) {
+	if(ctx->frame_count == 1) {
+		//TODO: error handling
+	}
+
+	*frame = ctx->call_stack[ctx->frame_count-- - 1];
+	ctx->cur_frame = ctx->call_stack[ctx->frame_count -1];
+	return USCRIPT_ERR_SUCCESS;
 }

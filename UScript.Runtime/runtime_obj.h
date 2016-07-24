@@ -24,4 +24,6 @@ USCRIPT_ERR runtime_obj_mul(RuntimeObject *obj1, RuntimeObject *obj2);
 USCRIPT_ERR runtime_obj_div(RuntimeObject *obj1, RuntimeObject *obj2);
 
 USCRIPT_ERR runtime_obj_xor(RuntimeObject *obj1, RuntimeObject *obj2);
+
+USCRIPT_ERR runtime_obj_change_type(RuntimeObject *obj, uscript_datatype type);
 #endif
