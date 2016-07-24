@@ -46,7 +46,11 @@ USCRIPT_ERR populate_function_args(FunctionContext* ctx, EvalStack* stack, Funct
 
 		int32_t typeSize = uscript_type_size(ctx->args[i]->obj.desc.type);
 
-		StackEntry *entry = eval_stack_pop(stack);
+		StackEntry *entry;
+		if(eval_stack_pop(stack, &entry) != USCRIPT_ERR_SUCCESS) {
+			//TODO: error handling	
+		}
+
 		if (typeSize == 0 /* RUNTIME_DETERMINED */) {
 			typeSize = uscript_type_size(entry->obj->desc.type);
 			ctx->args[i]->obj.desc.type = entry->obj->desc.type;
@@ -54,7 +58,7 @@ USCRIPT_ERR populate_function_args(FunctionContext* ctx, EvalStack* stack, Funct
 
 		ctx->args[i]->obj.data = (char*)malloc(typeSize);
 		memcpy(ctx->args[i]->obj.data, entry->obj->data, typeSize);
-		stack_entry_destroy(entry);
+		//stack_entry_destroy(entry);
 	}
 
 	// Reverse arguments for correct popping order

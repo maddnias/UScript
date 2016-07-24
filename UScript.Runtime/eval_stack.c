@@ -10,7 +10,11 @@
 void stack_entry_create(StackEntry **entry, uscript_datatype type) {
 	*entry = (StackEntry*)malloc(sizeof(StackEntry));
 
-	runtime_obj_create(&(*entry)->obj, type);
+	RuntimeObject *obj;
+	runtime_obj_create(&obj, type);
+
+	(*entry)->obj = obj;
+	//runtime_obj_destroy(obj);
 }
 
 //! Destroys a stack entry
@@ -61,23 +65,24 @@ USCRIPT_ERR eval_stack_push(EvalStack *stack, StackEntry *entry) {
 	return USCRIPT_ERR_SUCCESS;
 }
 
-// TODO: under/over flow checks
+// TODO: error handling
 //! Pops a stack entry from an evaluation stack.
 /*!
 	\param[in] stack The evaluation stack.
+	\param[out] entry The popped stack entry.
 	\return The entry that was popped from the evaluation stack.
 	\remark The original stack entry on top of the stack is destroyed in the process.
 */
-StackEntry* eval_stack_pop(EvalStack *stack) {
-	StackEntry *popped = stack->entries[stack->current_size - 1];
-	StackEntry *entry;
+USCRIPT_ERR eval_stack_pop(EvalStack *stack, StackEntry **entry) {
+	StackEntry *topEntry = stack->entries[stack->current_size-- - 1];
 	
-	stack_entry_create(&entry, popped->obj->desc.type);
-	entry->obj->desc.is_array = popped->obj->desc.is_array;
+	stack_entry_create(entry, topEntry->obj->desc.type);
+	int typeSize = uscript_type_size(topEntry->obj->desc.type);
 
-	memcpy(entry->obj->data, popped->obj->data,
-		uscript_type_size(popped->obj->desc.type));
+	(*entry)->obj->data = (char*)malloc(typeSize);
+	memcpy((*entry)->obj->data, topEntry->obj->data, typeSize);
 
-	stack_entry_destroy(stack->entries[stack->current_size-- -1]);
-	return entry;
+	stack_entry_destroy(topEntry);
+
+	return USCRIPT_ERR_SUCCESS;
 }

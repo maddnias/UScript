@@ -6,7 +6,7 @@
 #include "include/error.h"
 
 typedef struct StackEntry {
-	RuntimeObject* obj;
+	RuntimeObject *obj;
 } StackEntry;
 
 typedef struct EvalStack {
@@ -31,6 +31,6 @@ void eval_stack_destroy(EvalStack *stack);
 USCRIPT_ERR eval_stack_push(EvalStack *stack, StackEntry *entry);
 
 //! Pops a stack entry from an evaluation stack.
-StackEntry* eval_stack_pop(EvalStack *stack);
+USCRIPT_ERR eval_stack_pop(EvalStack *stack, StackEntry **entry);
 
 #endif

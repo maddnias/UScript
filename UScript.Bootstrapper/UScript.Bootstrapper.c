@@ -18,8 +18,7 @@ int main()
 	UScriptRuntimeContext *ctx;
 	runtime_ctx_create(&ctx, mdCtx);
 
-	while (true) {
-		execute_next(ctx);
+	while (execute_next(ctx) == USCRIPT_ERR_SUCCESS) {
 	}
 
     return 0;

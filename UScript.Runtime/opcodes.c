@@ -74,18 +74,25 @@ void instr_execute_lparam(UScriptRuntimeContext *ctx, UScriptInstruction *instr)
 */
 void instr_execute_add(UScriptRuntimeContext *ctx, UScriptInstruction *instr) {
 	//TODO: error handling
-	RuntimeObject *val1 = eval_stack_pop(ctx->cur_frame->func_ctx->eval_stack)->obj;
-	RuntimeObject *val2 = eval_stack_pop(ctx->cur_frame->func_ctx->eval_stack)->obj;
+	StackEntry *entry1, *entry2;
 
-	if(runtime_obj_add(val1, val2) != USCRIPT_ERR_SUCCESS) {
+	if(eval_stack_pop(ctx->cur_frame->func_ctx->eval_stack, &entry1) != USCRIPT_ERR_SUCCESS) {
+		//TODO: error handling
+	}
+
+	if (eval_stack_pop(ctx->cur_frame->func_ctx->eval_stack, &entry2) != USCRIPT_ERR_SUCCESS) {
+		//TODO: error handling
+	}
+
+	if(runtime_obj_add(entry1->obj, entry2->obj) != USCRIPT_ERR_SUCCESS) {
 		//TODO: ERROR HANDLING
 	}
 
-	runtime_obj_destroy(val2);
-
 	StackEntry *entry;
-	stack_entry_create(&entry, val1->desc.type);
-	entry->obj = val1;
+	stack_entry_create(&entry, entry1->obj->desc.type);
+	entry->obj = entry1->obj;
+
+	stack_entry_destroy(entry2);
 
 	eval_stack_push(ctx->cur_frame->func_ctx->eval_stack, entry);
 }
