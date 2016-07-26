@@ -96,7 +96,30 @@ void instr_execute_add(UScriptRuntimeContext *ctx, UScriptInstruction *instr) {
 	entry->obj = entry1->obj;
 
 	stack_entry_destroy(entry2);
+	eval_stack_push(ctx->cur_frame->func_ctx->eval_stack, entry);
+}
 
+void instr_execute_sub(UScriptRuntimeContext* ctx, UScriptInstruction* instr) {
+	//TODO: error handling
+	StackEntry *entry1, *entry2;
+
+	if (eval_stack_pop(ctx->cur_frame->func_ctx->eval_stack, &entry1) != USCRIPT_ERR_SUCCESS) {
+		//TODO: error handling
+	}
+
+	if (eval_stack_pop(ctx->cur_frame->func_ctx->eval_stack, &entry2) != USCRIPT_ERR_SUCCESS) {
+		//TODO: error handling
+	}
+
+	if (runtime_obj_sub(entry1->obj, entry2->obj) != USCRIPT_ERR_SUCCESS) {
+		//TODO: ERROR HANDLING
+	}
+
+	StackEntry *entry;
+	stack_entry_create(&entry, entry1->obj->desc.type);
+	entry->obj = entry1->obj;
+
+	stack_entry_destroy(entry2);
 	eval_stack_push(ctx->cur_frame->func_ctx->eval_stack, entry);
 }
 
@@ -131,4 +154,28 @@ void instr_execute_ret(UScriptRuntimeContext *ctx, UScriptInstruction *instr) {
 		}
 	}
 
+}
+
+void instr_execute_mul(UScriptRuntimeContext* ctx, UScriptInstruction* instr) {
+	//TODO: error handling
+	StackEntry *entry1, *entry2;
+
+	if (eval_stack_pop(ctx->cur_frame->func_ctx->eval_stack, &entry1) != USCRIPT_ERR_SUCCESS) {
+		//TODO: error handling
+	}
+
+	if (eval_stack_pop(ctx->cur_frame->func_ctx->eval_stack, &entry2) != USCRIPT_ERR_SUCCESS) {
+		//TODO: error handling
+	}
+
+	if (runtime_obj_mul(entry1->obj, entry2->obj) != USCRIPT_ERR_SUCCESS) {
+		//TODO: ERROR HANDLING
+	}
+
+	StackEntry *entry;
+	stack_entry_create(&entry, entry1->obj->desc.type);
+	entry->obj = entry1->obj;
+
+	stack_entry_destroy(entry2);
+	eval_stack_push(ctx->cur_frame->func_ctx->eval_stack, entry);
 }

@@ -40,7 +40,8 @@ explist
     ;
 
 exp
-    : 'nil'									#NilExp
+    : '(' exp ')'							#testerexp
+	| 'nil'									#NilExp
 	| 'false'								#FalseExp
 	| 'true'								#TrueExp
     | number								#NumberExp

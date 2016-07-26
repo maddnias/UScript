@@ -23,9 +23,13 @@ USCRIPT_ERR execute_next(UScriptRuntimeContext *ctx) {
 	case ADD: 
 		instr_execute_add(ctx, instr);
 		break;
-	case SUB: break;
+	case SUB: 
+		instr_execute_sub(ctx, instr);
+		break;
 	case DIV: break;
-	case MUL: break;
+	case MUL: 
+		instr_execute_mul(ctx, instr);
+		break;
 	case SCALL: 
 		instr_execute_scall(ctx, instr);
 		break;
@@ -77,9 +81,15 @@ USCRIPT_ERR parse_next_instr(UScriptRuntimeContext *ctx, UScriptInstruction **in
 		(*instr)->has_operand = false;
 		(*instr)->stack_impact = POP1;
 		break;
-	case SUB: break;
+	case SUB: 
+		(*instr)->has_operand = false;
+		(*instr)->stack_impact = POP1;
+		break;
 	case DIV: break;
-	case MUL: break;
+	case MUL: 
+		(*instr)->has_operand = false;
+		(*instr)->stack_impact = POP1;
+		break;
 	case SCALL: 
 		(*instr)->has_operand = true;
 		(*instr)->operand_type = OPERAND_TOKEN;

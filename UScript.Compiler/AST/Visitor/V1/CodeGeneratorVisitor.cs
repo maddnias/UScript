@@ -59,6 +59,12 @@ namespace UScript.Compiler.AST.Visitor.V1
                     else
                         _context.CodeGen.Emit(OpCode.SUB);
                     break;
+                case ArithmeticOp.Mul:
+                    if (_funcHeader != null)
+                        _funcHeader.CodeGen.Emit(OpCode.MUL);
+                    else
+                        _context.CodeGen.Emit(OpCode.MUL);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }

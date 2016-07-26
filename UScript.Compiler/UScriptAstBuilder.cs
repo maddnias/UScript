@@ -138,6 +138,30 @@ namespace UScript.Compiler
             base.ExitAddSubExp(context);
         }
 
+        public override void EnterMulDivModExp([NotNull] UScriptParser.MulDivModExpContext context)
+        {
+            var node = new ArithmeticExpressionNode
+            {
+                Op = ArithmeticOp.Mul
+            };
+
+            if (context.GetRuleContext<UScriptParser.OperatorMulDivModContext>(0).GetText() == "/")
+            {
+                node.Op = ArithmeticOp.Div;
+            }
+
+            AddNode(node);
+
+            base.EnterMulDivModExp(context);
+        }
+
+        public override void ExitMulDivModExp([NotNull] UScriptParser.MulDivModExpContext context)
+        {
+            TraverseUp();
+
+            base.ExitMulDivModExp(context);
+        }
+
         public override void EnterFuncCallStatement([NotNull] UScriptParser.FuncCallStatementContext context)
         {
             var actualCall = context.GetRuleContext<UScriptParser.FunctioncallContext>(0);
@@ -204,6 +228,12 @@ namespace UScript.Compiler
             TraverseUp();
 
             base.ExitNumberExp(context);
+        }
+
+        public override void EnterTesterexp([NotNull] UScriptParser.TesterexpContext context)
+        {
+            var lol = context.exp();
+            base.EnterTesterexp(context);
         }
 
         public override void EnterVarExp([NotNull] UScriptParser.VarExpContext context)

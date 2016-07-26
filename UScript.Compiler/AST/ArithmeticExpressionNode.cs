@@ -8,6 +8,8 @@ namespace UScript.Compiler.AST
     {
         Add,
         Subtract,
+        Mul,
+        Div
     }
 
     public class ArithmeticExpressionNode : BaseAstNode
@@ -19,6 +21,11 @@ namespace UScript.Compiler.AST
         public override void Accept(AstVisitor visitor)
         {
             visitor.VisitArithmeticExpressionNode(this);
+        }
+
+        public override string ToString()
+        {
+            return base.ToString() + "[" + Enum.GetName(typeof(ArithmeticOp), Op) + "]";
         }
     }
 }

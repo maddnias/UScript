@@ -57,6 +57,12 @@
     <ClInclude Include="runtime_obj.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="mem_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="superfasthash.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="metadata.c">
@@ -84,6 +90,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="runtime_obj.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="superfasthash.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mem_manager.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

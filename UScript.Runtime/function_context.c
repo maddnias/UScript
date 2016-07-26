@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "include/metadata.h"
 #include <memory.h>
+#include "mem_manager.h"
 
 //! Creates a basic function context.
 /*!

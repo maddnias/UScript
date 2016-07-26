@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include "metadata_context.h"
 #include "function_context.h"
+#include "mem_manager.h"
 
 typedef struct StackFrame {
 	uint32_t ip;
@@ -17,6 +18,7 @@ typedef struct UScriptRuntimeContext {
 	StackFrame* cur_frame;
 	int32_t frame_count; 
 	StackFrame** call_stack;
+	MemoryManager *mem_mgr;
 } UScriptRuntimeContext;
 
 typedef struct RuntimeError {

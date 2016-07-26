@@ -1,5 +1,6 @@
 #include "runtime_obj.h"
 #include <stdlib.h>
+#include <stdarg.h>
 
 //! Creates a runtime object.
 /*!
@@ -34,6 +35,21 @@ void runtime_obj_destroy(RuntimeObject *obj) {
 	free(obj);
 }
 
+bool __ensure_not_runtime_determined(int n_obj, ...) {
+	va_list ap;
+	va_start(ap, n_obj);
+
+	for (int i = 0; i < n_obj; i++) {
+		RuntimeObject *curObj = va_arg(ap, RuntimeObject*);
+		if (curObj->desc.type == RUNTIME_DETERMINED
+			|| curObj->desc.type == VOID)
+			return false;
+	}
+
+	va_end(ap);
+	return true;
+}
+
 //! Adds two runtime objects together
 /*!
 	\param[in] obj1 The first runtime object.
@@ -41,9 +57,7 @@ void runtime_obj_destroy(RuntimeObject *obj) {
 	\remark obj1 is the resulting object after the operation.
 */
 USCRIPT_ERR runtime_obj_add(RuntimeObject* obj1, RuntimeObject* obj2) {
-	if(obj1->desc.type == RUNTIME_DETERMINED
-		|| obj2->desc.type == RUNTIME_DETERMINED) {
-		//TODO: error handling
+	if(!__ensure_not_runtime_determined(2, obj1, obj2)) {
 		return USCRIPT_ERR_UNK;
 	}
 	
@@ -78,6 +92,87 @@ USCRIPT_ERR runtime_obj_add(RuntimeObject* obj1, RuntimeObject* obj2) {
 	case VOID: break;
 	default: break;
 	}
+
+	return USCRIPT_ERR_SUCCESS;
+}
+
+USCRIPT_ERR runtime_obj_sub(RuntimeObject* obj1, RuntimeObject* obj2) {
+	if (!__ensure_not_runtime_determined(2, obj1, obj2)) {
+		return USCRIPT_ERR_UNK;
+	}
+
+	switch (obj1->desc.type) {
+
+	case BYTE: break;
+	case CHAR: break;
+	case BOOL: break;
+	case I16: break;
+	case I32:
+		switch (obj2->desc.type) {
+
+		case BYTE: break;
+		case CHAR: break;
+		case BOOL: break;
+		case I16: break;
+		case I32:
+			*(int32_t*)obj1->data -= *(int32_t*)obj2->data;
+			break;
+		case I64: break;
+		case U16: break;
+		case U32: break;
+		case U64: break;
+		case VOID: break;
+		default: break;
+		}
+		break;
+	case I64: break;
+	case U16: break;
+	case U32: break;
+	case U64: break;
+	case VOID: break;
+	default: break;
+	}
+
+	return USCRIPT_ERR_SUCCESS;
+}
+
+USCRIPT_ERR runtime_obj_mul(RuntimeObject* obj1, RuntimeObject* obj2) {
+	if (!__ensure_not_runtime_determined(2, obj1, obj2)) {
+		return USCRIPT_ERR_UNK;
+	}
+
+	switch (obj1->desc.type) {
+
+	case BYTE: break;
+	case CHAR: break;
+	case BOOL: break;
+	case I16: break;
+	case I32:
+		switch (obj2->desc.type) {
+
+		case BYTE: break;
+		case CHAR: break;
+		case BOOL: break;
+		case I16: break;
+		case I32:
+			*(int32_t*)obj1->data *= *(int32_t*)obj2->data;
+			break;
+		case I64: break;
+		case U16: break;
+		case U32: break;
+		case U64: break;
+		case VOID: break;
+		default: break;
+		}
+		break;
+	case I64: break;
+	case U16: break;
+	case U32: break;
+	case U64: break;
+	case VOID: break;
+	default: break;
+	}
+
 
 	return USCRIPT_ERR_SUCCESS;
 }

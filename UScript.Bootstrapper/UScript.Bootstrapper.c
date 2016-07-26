@@ -7,8 +7,9 @@
 
 int main()
 {
+	getchar();
 	FILE *fp;
-	fp = fopen("C:\\compiled_script.usce", "rb");
+	fp = fopen("C:\\Users\\mattias\\Documents\\compiled_script.usce", "rb");
 
 	UScriptMetadataContext *mdCtx;
 	create_mdctx_from_file(fp, &mdCtx);
@@ -19,6 +20,8 @@ int main()
 	while (execute_next(ctx) == USCRIPT_ERR_SUCCESS) {
 	}
 
+	printf("%i", *(int32_t*)ctx->cur_frame->func_ctx->eval_stack->entries[0]->obj->data);
+	getchar();
     return 0;
 }
 

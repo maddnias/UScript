@@ -20,6 +20,8 @@ USCRIPT_ERR runtime_ctx_create(UScriptRuntimeContext **ctx, UScriptMetadataConte
 	// Create context for entry code
 	__create_basic_function_ctx(&(*ctx)->call_stack[0]->func_ctx);
 
+	mem_mgr_create(&(*ctx)->mem_mgr);
+
 	return USCRIPT_ERR_SUCCESS;
 }
 
